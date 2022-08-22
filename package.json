@@ -1,15 +1,14 @@
 {
-    "name": "mern-ecommerce",
-    "version": "1.0.0",
-    "main": "index.js",
-    "scripts": {
-        "start": "cd client && yarn start",
-        "prepare": "husky install"
-    },
-    "author": "rakitenkogermans <rakitenko.germans@gmail.com>",
-    "license": "MIT",
-    "devDependencies": {
-        "husky": "^8.0.1",
-        "lint-staged": "^13.0.3"
-    }
+  "name": "mern-ecommerce",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "client": "cd client && yarn start",
+    "prepare": "husky install"
+  },
+  "author": "rakitenkogermans <rakitenko.germans@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^8.0.1"
+  }
 }
