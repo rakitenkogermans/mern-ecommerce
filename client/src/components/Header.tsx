@@ -11,8 +11,8 @@ const Header: FC<HeaderProps> = () => {
                 <Container>
                     <Navbar.Brand href="/">ProShop</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-                        <Nav className="gap-4">
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="gap-4 ms-auto">
                             <Nav.Link href="/cart" className="d-flex align-items-center gap-2">
                                 <FaShoppingCart size={20} />
                                 Cart

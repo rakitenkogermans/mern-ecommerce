@@ -1,5 +1,6 @@
 import {FC} from 'react';
 import {Card} from 'react-bootstrap';
+import {Rating} from './Rating';
 
 type ProductProps = {
     id: string;
@@ -38,9 +39,7 @@ const Product: FC<ProductProps> = ({
                     </Card.Title>
                 </a>
                 <Card.Text as="div">
-                    <div className="my-3">
-                        {rating} from {numReviews} reviews
-                    </div>
+                    <Rating value={rating} text={`${numReviews} reviews`} totalStars={5} />
                 </Card.Text>
                 <Card.Text as="h3">${price}</Card.Text>
             </Card.Body>
