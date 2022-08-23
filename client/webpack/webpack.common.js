@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: path.resolve(__dirname, '..', './src/index.tsx'),
@@ -43,7 +43,10 @@ module.exports = {
         new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, '..', './public/index.html'),
-            favicon: path.resolve(__dirname, '..', './public/favicon.ico')
-        })
+            favicon: path.resolve(__dirname, '..', './public/favicon.ico'),
+        }),
+        new CopyPlugin({
+            patterns: [{from: path.resolve(__dirname, '../src/assets'), to: 'assets'}],
+        }),
     ],
-}
+};
