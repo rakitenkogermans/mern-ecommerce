@@ -1,18 +1,18 @@
 import { FC } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import products from '../data/products';
-import { Product } from '../components/Product';
+import { ProductCard } from '../components/ProductCard';
 
-type HomeScreenProps = {};
+type HomeProps = {};
 
-const HomeScreen: FC<HomeScreenProps> = () => {
+const Home: FC<HomeProps> = () => {
     return (
         <>
             <h1>Latest Products</h1>
             <Row>
                 {products.map((product) => (
                     <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                        <Product
+                        <ProductCard
                             key={product._id}
                             id={product._id}
                             name={product.name}
@@ -32,4 +32,4 @@ const HomeScreen: FC<HomeScreenProps> = () => {
     );
 };
 
-export { HomeScreen };
+export { Home };

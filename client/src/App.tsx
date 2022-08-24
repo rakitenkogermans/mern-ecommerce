@@ -1,24 +1,26 @@
 import { FC } from 'react';
-import { Container } from 'react-bootstrap';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './assets/styles/bootstrap.min.css';
 import './assets/styles/main.css';
-import { Footer } from './components/Footer';
-import { Header } from './components/Header';
-import { HomeScreen } from './pages/HomeScreen';
+import { SharedLayout } from './components/SharedLayout';
+import { Cart } from './pages/Cart';
+import { Home } from './pages/Home';
+import { Product } from './pages/Product';
 
 type AppProps = {};
 
 const App: FC<AppProps> = () => {
     return (
-        <div>
-            <Header />
-            <main className="py-3">
-                <Container>
-                    <HomeScreen />
-                </Container>
-            </main>
-            <Footer />
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<SharedLayout />}>
+                    <Route index element={<Home />} />
+                    <Route path="product/:id" element={<Product />} />
+                    <Route path="cart" element={<Cart />} />
+                </Route>
+                <Route path="*" element={<h1>not found</h1>} />
+            </Routes>
+        </BrowserRouter>
     );
 };
 

@@ -1,8 +1,9 @@
 import { FC } from 'react';
 import { Card } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
 import { Rating } from './Rating';
 
-type ProductProps = {
+type ProductCardProps = {
     id: string;
     name: string;
     image: string;
@@ -15,18 +16,18 @@ type ProductProps = {
     numReviews: number;
 };
 
-const Product: FC<ProductProps> = ({ id, image, name, numReviews, price, rating }) => {
+const ProductCard: FC<ProductCardProps> = ({ id, image, name, numReviews, price, rating }) => {
     return (
         <Card className="my-3 p-3 rounded">
-            <a href={`/product/${id}`}>
+            <NavLink to={`/product/${id}`}>
                 <Card.Img src={image} variant="top" />
-            </a>
+            </NavLink>
             <Card.Body>
-                <a href={`/product/${id}`} className="text-decoration-none">
+                <NavLink to={`/product/${id}`} className="text-decoration-none">
                     <Card.Title as="div">
                         <strong>{name}</strong>
                     </Card.Title>
-                </a>
+                </NavLink>
                 <Card.Text as="div">
                     <Rating value={rating} text={`${numReviews} reviews`} totalStars={5} />
                 </Card.Text>
@@ -36,4 +37,4 @@ const Product: FC<ProductProps> = ({ id, image, name, numReviews, price, rating 
     );
 };
 
-export { Product };
+export { ProductCard };

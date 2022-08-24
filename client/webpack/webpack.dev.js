@@ -9,6 +9,7 @@ module.exports = {
         open: true,
         compress: true,
         port: 3000,
+        historyApiFallback: true,
     },
     devtool: 'cheap-module-source-map',
     plugins: [
