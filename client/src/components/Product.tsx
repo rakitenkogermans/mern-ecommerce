@@ -1,6 +1,6 @@
-import {FC} from 'react';
-import {Card} from 'react-bootstrap';
-import {Rating} from './Rating';
+import { FC } from 'react';
+import { Card } from 'react-bootstrap';
+import { Rating } from './Rating';
 
 type ProductProps = {
     id: string;
@@ -15,18 +15,7 @@ type ProductProps = {
     numReviews: number;
 };
 
-const Product: FC<ProductProps> = ({
-    brand,
-    category,
-    countInStock,
-    description,
-    id,
-    image,
-    name,
-    numReviews,
-    price,
-    rating,
-}) => {
+const Product: FC<ProductProps> = ({ id, image, name, numReviews, price, rating }) => {
     return (
         <Card className="my-3 p-3 rounded">
             <a href={`/product/${id}`}>
@@ -47,4 +36,4 @@ const Product: FC<ProductProps> = ({
     );
 };
 
-export {Product};
+export { Product };

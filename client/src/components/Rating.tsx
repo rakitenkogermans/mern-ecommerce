@@ -1,11 +1,11 @@
-import {FC} from 'react';
-import {Star} from './Star';
+import { FC } from 'react';
+import { Star } from './Star';
 
 const createArray = (length: number) => [...Array(length)];
 
-type RatingProps = {value: number; text: string; totalStars: number};
+type RatingProps = { value: number; text: string; totalStars: number };
 
-const Rating: FC<RatingProps> = ({value, text, totalStars}) => {
+const Rating: FC<RatingProps> = ({ value, text, totalStars }) => {
     return (
         <div className="rating d-flex align-items-center">
             {createArray(totalStars).map((_, i) => {
@@ -17,4 +17,4 @@ const Rating: FC<RatingProps> = ({value, text, totalStars}) => {
     );
 };
 
-export {Rating};
+export { Rating };

@@ -1,9 +1,9 @@
-import {FC} from 'react';
-import {FaStar, FaStarHalfAlt, FaRegStar} from 'react-icons/fa';
+import { FC } from 'react';
+import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
 
-type StarProps = {selected: boolean; half: boolean; color?: string; size?: number};
+type StarProps = { selected: boolean; half: boolean; color?: string; size?: number };
 
-const Star: FC<StarProps> = ({selected, half, color = '#fcc000', size = 18}) => {
+const Star: FC<StarProps> = ({ selected, half, color = '#fcc000', size = 18 }) => {
     if (half) {
         return (
             <>
@@ -22,4 +22,4 @@ const Star: FC<StarProps> = ({selected, half, color = '#fcc000', size = 18}) => 
     );
 };
 
-export {Star};
+export { Star };

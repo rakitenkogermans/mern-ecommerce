@@ -1,4 +1,4 @@
-const path = require('path');
+// const path = require('path');
 
 module.exports = {
     env: {
@@ -7,11 +7,11 @@ module.exports = {
     },
     parser: '@typescript-eslint/parser',
     parserOptions: {
-        project: path.resolve(__dirname, './tsconfig.json'),
-        tsconfigRootDir: __dirname,
-        ecmaFeatures: {
-            jsx: true,
-        },
+        // project: path.resolve(__dirname, './tsconfig.json'),
+        // tsconfigRootDir: __dirname,
+        // ecmaFeatures: {
+        //     jsx: true,
+        // },
         ecmaVersion: 'latest',
         sourceType: 'module',
     },
@@ -25,14 +25,14 @@ module.exports = {
         'plugin:jsx-a11y/recommended',
         'plugin:eslint-comments/recommended',
         'prettier',
-        'plugin:prettier/recommended',
+        // 'plugin:prettier/recommended',
     ],
     plugins: ['react', '@typescript-eslint'],
     rules: {
         semi: ['error', 'always'],
         '@typescript-eslint/semi': ['error', 'always'],
-        quotes: ['error', 'single', {avoidEscape: true}],
-        '@typescript-eslint/quotes': ['error', 'single', {avoidEscape: true}],
+        quotes: ['error', 'single', { avoidEscape: true }],
+        '@typescript-eslint/quotes': ['error', 'single', { avoidEscape: true }],
         'no-unused-vars': 'off',
         '@typescript-eslint/no-unused-vars': ['error'],
         '@typescript-eslint/no-var-requires': 'off',
@@ -45,7 +45,7 @@ module.exports = {
                 },
             },
         ],
-        '@typescript-eslint/bracketSpacing': false,
+        '@typescript-eslint/object-curly-spacing': ['error', 'always'],
         'react/prop-types': 'off',
         'react/jsx-uses-react': 'off',
         'react/react-in-jsx-scope': 'off',

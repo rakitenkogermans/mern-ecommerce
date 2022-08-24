@@ -1,7 +1,7 @@
-import {FC} from 'react';
-import {Col, Row} from 'react-bootstrap';
+import { FC } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import products from '../data/products';
-import {Product} from '../components/Product';
+import { Product } from '../components/Product';
 
 type HomeScreenProps = {};
 
@@ -32,4 +32,4 @@ const HomeScreen: FC<HomeScreenProps> = () => {
     );
 };
 
-export {HomeScreen};
+export { HomeScreen };

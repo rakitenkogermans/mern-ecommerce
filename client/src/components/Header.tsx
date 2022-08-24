@@ -1,6 +1,6 @@
-import {FC} from 'react';
-import {Navbar, Container, Nav} from 'react-bootstrap';
-import {FaShoppingCart, FaUserAlt} from 'react-icons/fa';
+import { FC } from 'react';
+import { Navbar, Container, Nav } from 'react-bootstrap';
+import { FaShoppingCart, FaUserAlt } from 'react-icons/fa';
 
 type HeaderProps = {};
 
@@ -29,4 +29,4 @@ const Header: FC<HeaderProps> = () => {
     );
 };
 
-export {Header};
+export { Header };

@@ -1,5 +1,5 @@
-import {FC} from 'react';
-import {Col, Container, Row} from 'react-bootstrap';
+import { FC } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 
 type FooterProps = {};
 
@@ -15,4 +15,4 @@ const Footer: FC<FooterProps> = () => {
     );
 };
 
-export {Footer};
+export { Footer };

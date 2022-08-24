@@ -1,9 +1,9 @@
-import {FC} from 'react';
-import {Container} from 'react-bootstrap';
+import { FC } from 'react';
+import { Container } from 'react-bootstrap';
 import './assets/styles/bootstrap.min.css';
 import './assets/styles/main.css';
-import {Footer} from './components/Footer';
-import {Header} from './components/Header';
+import { Footer } from './components/Footer';
+import { Header } from './components/Header';
 import { HomeScreen } from './pages/HomeScreen';
 
 type AppProps = {};
@@ -14,7 +14,7 @@ const App: FC<AppProps> = () => {
             <Header />
             <main className="py-3">
                 <Container>
-                    <HomeScreen/>
+                    <HomeScreen />
                 </Container>
             </main>
             <Footer />
@@ -22,4 +22,4 @@ const App: FC<AppProps> = () => {
     );
 };
 
-export {App};
+export { App };
