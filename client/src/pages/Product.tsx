@@ -23,9 +23,7 @@ const Product: FC<ProductProps> = () => {
             console.log(err);
         }
     }, []);
-    // const { name, numReviews, image, rating, price, description, countInStock } = products.find(
-    //     (p) => p._id === id
-    // )!;
+
     return (
         <>
             <Link className="btn btn-light my-3" to="/">
