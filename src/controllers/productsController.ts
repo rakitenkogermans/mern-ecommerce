@@ -6,9 +6,7 @@ const getAllProducts = (req: Request, res: Response) => {
 };
 
 const getProduct = (req: Request, res: Response) => {
-  console.log("param id", req.params.id);
   const product = products.find((p) => p._id === req.params.id);
-  console.log(product);
   res.json(product);
 };
 
