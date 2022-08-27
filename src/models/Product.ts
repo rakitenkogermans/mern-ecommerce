@@ -13,7 +13,6 @@ const ProductSchema: Schema = new Schema<IProductModel>(
       type: String,
       required: [true, "Please provide name"],
       minLength: 3,
-      maxLength: 20,
       trim: true,
     },
     image: {

@@ -7,7 +7,6 @@ const UserSchema: Schema = new Schema<IUserModel>(
       type: String,
       required: [true, "Please provide name"],
       minLength: 3,
-      maxLength: 20,
       trim: true,
     },
     email: {
