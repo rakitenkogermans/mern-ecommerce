@@ -1,12 +1,18 @@
 import { Request, Response } from "express";
-import { products } from "../data/products";
+import { Product } from "../models/Product";
+import { StatusCodes } from "../constants/statusCodes";
 
-const getAllProducts = (req: Request, res: Response) => {
+const getAllProducts = async (req: Request, res: Response) => {
+  const products = await Product.find({});
   res.json(products);
 };
 
-const getProduct = (req: Request, res: Response) => {
-  const product = products.find((p) => p._id === req.params.id);
+const getProduct = async (req: Request, res: Response) => {
+  const product = await Product.findById(req.params.id);
+  if (!product) {
+    res.status(StatusCodes.NOT_FOUND).json({ message: "Product not found" });
+    return;
+  }
   res.json(product);
 };
 
