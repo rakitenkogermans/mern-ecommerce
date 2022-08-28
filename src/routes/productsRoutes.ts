@@ -1,6 +1,6 @@
 import express from "express";
 import { getAllProducts, getProduct } from "../controllers/productsController";
-import { asyncHandler } from "../middlewares/asyncHandler";
+import { asyncHandler } from "../utils/asyncHandler";
 
 const productsRouter = express.Router();
 

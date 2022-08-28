@@ -4,6 +4,7 @@ import morgan from "morgan";
 import path from "path";
 import { connectDB } from "./db/connect";
 import { productsRouter } from "./routes/productsRoutes";
+import { errorHandler, notFound } from "./middlewares/errorMiddleware";
 
 config({ path: `.env.${process.env.NODE_ENV}` });
 
@@ -23,6 +24,9 @@ app.use("/api/auth", (req: Request, res: Response) => {
 });
 
 app.use("/api/products", productsRouter);
+
+app.use(notFound);
+app.use(errorHandler);
 
 // app.get("*", (req: Request, res: Response) => {
 //   res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
