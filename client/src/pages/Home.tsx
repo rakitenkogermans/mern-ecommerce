@@ -3,6 +3,8 @@ import { Col, Row } from 'react-bootstrap';
 import { ProductCard } from '../components/ProductCard';
 import { useActions } from '../hooks/useActions';
 import { useTypedSelector } from '../hooks/useTypedSelector';
+import { Loader } from '../components/Loader';
+import { Message } from '../components/Message';
 
 type HomeProps = {};
 
@@ -17,9 +19,9 @@ const Home: FC<HomeProps> = () => {
         <>
             <h1>Latest Products</h1>
             {isLoading ? (
-                <h2>Loading...</h2>
+                <Loader />
             ) : error ? (
-                <h2>{error}</h2>
+                <Message variant="danger">{error}</Message>
             ) : (
                 <Row>
                     {products.map((product) => (
