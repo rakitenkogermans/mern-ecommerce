@@ -1,8 +1,15 @@
-import { ProductListAction, ProductListActionTypes, ProductListState } from '../../@types/products';
+import {
+    ProductListAction,
+    ProductListActionTypes,
+    ProductListState,
+} from '../../@types/products/productList';
 
-const initialState: ProductListState = { isLoading: false, products: [], error: null };
+const productListInitialState: ProductListState = { isLoading: false, products: [], error: null };
 
-const productListReducer = (state = initialState, action: ProductListAction): ProductListState => {
+const productListReducer = (
+    state = productListInitialState,
+    action: ProductListAction
+): ProductListState => {
     if (action.type === ProductListActionTypes.PRODUCT_LIST_BEGIN) {
         return { ...state, isLoading: true, error: null };
     }

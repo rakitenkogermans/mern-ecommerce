@@ -1,5 +1,3 @@
 import * as ProductActionCreators from './productActions';
 
-export default {
-    ...ProductActionCreators,
-};
+export const ActionCreators = { ...ProductActionCreators };
