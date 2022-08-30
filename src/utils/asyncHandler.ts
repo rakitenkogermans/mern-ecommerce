@@ -1,11 +1,3 @@
-// interface expressAsyncHandler<
-//   P = core.ParamsDictionary,
-//   ResBody = any,
-//   ReqBody = any,
-//   ReqQuery = core.Query,
-//   >(handler: (...args: Parameters<express.RequestHandler<P, ResBody, ReqBody, ReqQuery>>) => void | Promise<void>):
-// express.RequestHandler<P, ResBody, ReqBody, ReqQuery>;
-
 import { ParamsDictionary, Query } from "express-serve-static-core";
 import { RequestHandler } from "express";
 

@@ -1,8 +1,8 @@
-import express from "express";
+import { Router } from "express";
 import { getAllProducts, getProduct } from "../controllers/productsController";
 import { asyncHandler } from "../utils/asyncHandler";
 
-const productsRouter = express.Router();
+const productsRouter = Router();
 
 productsRouter.route("/").get(asyncHandler(getAllProducts));
 
