@@ -2,7 +2,7 @@ import { ProductListAction, ProductListActionTypes, ProductType } from '../../@t
 import { Dispatch } from 'redux';
 import axios, { AxiosError } from 'axios';
 
-export const listProducts = () => async (dispatch: Dispatch<ProductListAction>) => {
+const listProducts = () => async (dispatch: Dispatch<ProductListAction>) => {
     dispatch({ type: ProductListActionTypes.PRODUCT_LIST_BEGIN });
     try {
         const { data } = await axios.get<ProductType[]>('/api/products');
@@ -23,3 +23,5 @@ export const listProducts = () => async (dispatch: Dispatch<ProductListAction>) 
             });
     }
 };
+
+export { listProducts };
