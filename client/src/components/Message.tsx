@@ -2,7 +2,15 @@ import { FC, ReactNode } from 'react';
 import { Alert } from 'react-bootstrap';
 
 type MessageProps = {
-    variant: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark';
+    variant?:
+        | 'primary'
+        | 'secondary'
+        | 'success'
+        | 'info'
+        | 'warning'
+        | 'danger'
+        | 'light'
+        | 'dark';
     children: ReactNode;
 };
 

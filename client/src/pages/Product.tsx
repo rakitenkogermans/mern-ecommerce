@@ -99,7 +99,7 @@ const Product: FC<ProductProps> = () => {
                                     </Row>
                                 </ListGroup.Item>
                             )}
-                            <ListGroup.Item>
+                            <ListGroup.Item className="d-grid">
                                 <Button
                                     onClick={addToCartHandler}
                                     className="btn-block"
