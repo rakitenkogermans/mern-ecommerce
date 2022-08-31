@@ -12,7 +12,7 @@ const Cart: FC<CartProps> = () => {
     const { id } = useParams();
     const [searchParams] = useSearchParams();
     const qty = Number(searchParams.get('qty')) || 1;
-    const { addToCart } = useActions();
+    const { addToCart, removeFromCart } = useActions();
     const { cartItems } = useTypedSelector((state) => state.cart);
     const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ const Cart: FC<CartProps> = () => {
     const totalPrice = cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2);
 
     const removeFromCartHandler = (id: string) => {
-        console.log(id);
+        removeFromCart(id);
     };
 
     const checkoutHandler = () => {

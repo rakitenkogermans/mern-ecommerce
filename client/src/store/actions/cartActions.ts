@@ -3,6 +3,8 @@ import { CartAction, CartActionTypes } from '../../@types/cart/cart';
 import axios from 'axios';
 import { ProductType } from '../../@types/products';
 import { RootState } from '../reducers';
+import { saveToLocalstorage } from '../../utils/localstorage';
+import { LocalstorageKeys } from '../../@types/localstorage';
 
 const addToCart =
     (id: string, qty: number) =>
@@ -23,7 +25,13 @@ const addToCart =
             },
         });
 
-        localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+        saveToLocalstorage(LocalstorageKeys.CART_ITEMS, getState().cart.cartItems);
     };
 
-export { addToCart };
+const removeFromCart =
+    (id: string) => async (dispatch: Dispatch<CartAction>, getState: () => RootState) => {
+        dispatch({ type: CartActionTypes.CART_REMOVE_ITEM, payload: { id } });
+        saveToLocalstorage(LocalstorageKeys.CART_ITEMS, getState().cart.cartItems);
+    };
+
+export { addToCart, removeFromCart };

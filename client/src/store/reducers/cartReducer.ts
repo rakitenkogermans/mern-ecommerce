@@ -1,6 +1,7 @@
 import { CartAction, CartActionTypes, CartState } from '../../@types/cart/cart';
+import { LocalstorageKeys } from '../../@types/localstorage';
 
-const cartItemsFromStorage = localStorage.getItem('cartItems');
+const cartItemsFromStorage = localStorage.getItem(LocalstorageKeys.CART_ITEMS);
 
 const cartInitialState: CartState = {
     cartItems: cartItemsFromStorage ? JSON.parse(cartItemsFromStorage) : [],
@@ -22,6 +23,10 @@ const cartReducer = (state = cartInitialState, action: CartAction): CartState =>
     }
 
     if (action.type === CartActionTypes.CART_REMOVE_ITEM) {
+        return {
+            ...state,
+            cartItems: state.cartItems.filter((item) => item.product !== action.payload.id),
+        };
     }
 
     return state;
