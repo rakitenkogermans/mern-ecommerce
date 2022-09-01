@@ -1,5 +1,7 @@
 import { model, Schema } from "mongoose";
 import { IUserModel } from "../types/User";
+import { compare } from "bcryptjs";
+import { sign } from "jsonwebtoken";
 
 const UserSchema: Schema = new Schema<IUserModel>(
   {
@@ -29,9 +31,19 @@ const UserSchema: Schema = new Schema<IUserModel>(
   { timestamps: true }
 );
 
-// UserSchema.pre("save", async function (this: IUserModel, next) {
-//   return next();
-// });
+UserSchema.methods.createJWT = function () {
+  const user = this as IUserModel;
+  return sign({ userId: user._id }, process.env.JWT_SECRET || "", {
+    expiresIn: process.env.JWT_LIFETIME,
+  });
+};
+
+UserSchema.methods.comparePassword = async function (
+  candidatePassword: string
+) {
+  const user = this as IUserModel;
+  return await compare(candidatePassword, user.password);
+};
 
 const User = model<IUserModel>("User", UserSchema);
 export { User };

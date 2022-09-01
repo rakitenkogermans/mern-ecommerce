@@ -1,10 +1,10 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express } from "express";
 import { config } from "dotenv";
 import morgan from "morgan";
-import path from "path";
 import { connectDB } from "./db/connect";
 import { productsRouter } from "./routes/productsRoutes";
 import { errorHandler, notFound } from "./middlewares/errorMiddleware";
+import { userRouter } from "./routes/userRoutes";
 
 config({ path: `.env.${process.env.NODE_ENV}` });
 
@@ -19,11 +19,8 @@ if (process.env.NODE_ENV !== "production") {
 
 app.use(express.json());
 
-app.use("/api/auth", (req: Request, res: Response) => {
-  res.send("auth");
-});
-
 app.use("/api/products", productsRouter);
+app.use("/api/users", userRouter);
 
 app.use(notFound);
 app.use(errorHandler);

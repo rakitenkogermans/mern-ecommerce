@@ -7,4 +7,7 @@ export interface IUser {
   isAdmin: boolean;
 }
 
-export interface IUserModel extends IUser, Document {}
+export interface IUserModel extends IUser, Document {
+  createJWT: () => string;
+  comparePassword: (candidatePassword: string) => Promise<boolean>;
+}
