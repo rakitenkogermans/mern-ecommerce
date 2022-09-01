@@ -20,7 +20,6 @@ const UserSchema: Schema = new Schema<IUserModel>(
       type: String,
       required: [true, "Please provide password"],
       minLength: 8,
-      select: false,
     },
     isAdmin: {
       type: Boolean,

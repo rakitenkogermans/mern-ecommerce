@@ -9,7 +9,8 @@ const authUser = async (
   const { email, password } = req.body;
 
   if (!email || !password) {
-    throw new Error("please provide all values");
+    res.status(StatusCodes.BAD_REQUEST);
+    throw new Error("Please provide all values");
   }
 
   const user = await User.findOne({ email });
@@ -44,7 +45,8 @@ const registerUser = async (
   const { name, email, password } = req.body;
 
   if (!email || !password || !name) {
-    throw new Error("please provide all values");
+    res.status(StatusCodes.BAD_REQUEST);
+    throw new Error("Please provide all values");
   }
 
   const userExists = await User.findOne({ email });

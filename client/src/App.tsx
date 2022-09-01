@@ -6,6 +6,7 @@ import { SharedLayout } from './components/SharedLayout';
 import { Cart } from './pages/Cart';
 import { Home } from './pages/Home';
 import { Product } from './pages/Product';
+import { Login } from './pages/Login';
 
 type AppProps = {};
 
@@ -18,6 +19,7 @@ const App: FC<AppProps> = () => {
                     <Route path="product/:id" element={<Product />} />
                     <Route path="cart/:id" element={<Cart />} />
                     <Route path="cart" element={<Cart />} />
+                    <Route path="login" element={<Login />} />
                 </Route>
                 <Route path="*" element={<h1>not found</h1>} />
             </Routes>
