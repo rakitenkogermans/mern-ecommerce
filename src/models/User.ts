@@ -1,6 +1,6 @@
-import { model, Schema } from "mongoose";
+import { CallbackWithoutResultAndOptionalError, model, Schema } from "mongoose";
 import { IUserModel } from "../types/User";
-import { compare } from "bcryptjs";
+import { compare, genSalt, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 
 const UserSchema: Schema = new Schema<IUserModel>(
@@ -29,6 +29,19 @@ const UserSchema: Schema = new Schema<IUserModel>(
     },
   },
   { timestamps: true }
+);
+
+UserSchema.pre(
+  "save",
+  async function (
+    this: IUserModel,
+    next: CallbackWithoutResultAndOptionalError
+  ) {
+    if (!this.isModified("password")) return;
+    const salt = await genSalt(10);
+    this.password = await hash(this.password, salt);
+    return next();
+  }
 );
 
 UserSchema.methods.createJWT = function () {
