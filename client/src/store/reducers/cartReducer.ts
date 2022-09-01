@@ -1,10 +1,11 @@
 import { CartAction, CartActionTypes, CartState } from '../../@types/cart/cart';
 import { LocalstorageKeys } from '../../@types/localstorage';
+import { getFromLocalstorage } from '../../utils/localstorage';
 
-const cartItemsFromStorage = localStorage.getItem(LocalstorageKeys.CART_ITEMS);
+const cartItemsFromStorage = getFromLocalstorage(LocalstorageKeys.CART_ITEMS);
 
 const cartInitialState: CartState = {
-    cartItems: cartItemsFromStorage ? JSON.parse(cartItemsFromStorage) : [],
+    cartItems: cartItemsFromStorage ? cartItemsFromStorage : [],
 };
 
 const cartReducer = (state = cartInitialState, action: CartAction): CartState => {
