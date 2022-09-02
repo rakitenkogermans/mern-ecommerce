@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { UserAction, UserActionTypes } from '../../@types/user/user';
 import axios, { AxiosError } from 'axios';
 import { UserType } from '../../@types/user';
-import { saveToLocalstorage } from '../../utils/localstorage';
+import { removeFromLocalstorage, saveToLocalstorage } from '../../utils/localstorage';
 import { LocalstorageKeys } from '../../@types/localstorage';
 
 const login = (email: string, password: string) => async (dispatch: Dispatch<UserAction>) => {
@@ -25,4 +25,9 @@ const login = (email: string, password: string) => async (dispatch: Dispatch<Use
     }
 };
 
-export { login };
+const logout = () => async (dispatch: Dispatch<UserAction>) => {
+    removeFromLocalstorage(LocalstorageKeys.USER_INFO);
+    dispatch({ type: UserActionTypes.USER_LOGOUT });
+};
+
+export { login, logout };

@@ -7,4 +7,8 @@ const getFromLocalstorage = (key: string) => {
     return data ? JSON.parse(data) : null;
 };
 
-export { saveToLocalstorage, getFromLocalstorage };
+const removeFromLocalstorage = (key: string) => {
+    localStorage.removeItem(key);
+};
+
+export { saveToLocalstorage, getFromLocalstorage, removeFromLocalstorage };

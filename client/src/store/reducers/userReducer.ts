@@ -24,6 +24,10 @@ const userReducer = (state = userInitialState, action: UserAction): UserState =>
         return { ...state, isLoading: false, error: action.payload.msg };
     }
 
+    if (action.type === UserActionTypes.USER_LOGOUT) {
+        return { ...state, isLoading: false, error: null, userInfo: {} as UserType };
+    }
+
     return state;
 };
 

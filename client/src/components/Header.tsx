@@ -1,12 +1,16 @@
 import { FC } from 'react';
-import { Navbar, Container, Nav } from 'react-bootstrap';
+import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { FaShoppingCart, FaUserAlt } from 'react-icons/fa';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useTypedSelector } from '../hooks/useTypedSelector';
+import { useActions } from '../hooks/useActions';
 
 type HeaderProps = {};
 
 const Header: FC<HeaderProps> = () => {
     const location = useLocation();
+    const { logout } = useActions();
+    const { userInfo } = useTypedSelector((state) => state.user);
     return (
         <header>
             <Navbar bg="primary" variant="dark" expand="lg" collapseOnSelect>
@@ -25,14 +29,25 @@ const Header: FC<HeaderProps> = () => {
                                 <FaShoppingCart size={20} />
                                 Cart
                             </Nav.Link>
-                            <Nav.Link
-                                as={Link}
-                                to="/login"
-                                className="d-flex align-items-center gap-2"
-                            >
-                                <FaUserAlt size={20} />
-                                Sign in
-                            </Nav.Link>
+                            {Object.keys(userInfo).length !== 0 ? (
+                                <NavDropdown title={userInfo.name} id="username">
+                                    <Nav.Link as={Link} to="/profile" className="p-0">
+                                        <NavDropdown.Item>Profile</NavDropdown.Item>
+                                    </Nav.Link>
+                                    <Nav.Link className="p-0">
+                                        <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
+                                    </Nav.Link>
+                                </NavDropdown>
+                            ) : (
+                                <Nav.Link
+                                    as={Link}
+                                    to="/login"
+                                    className="d-flex align-items-center gap-2"
+                                >
+                                    <FaUserAlt size={20} />
+                                    Sign in
+                                </Nav.Link>
+                            )}
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
