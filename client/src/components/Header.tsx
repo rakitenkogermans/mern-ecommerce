@@ -29,7 +29,7 @@ const Header: FC<HeaderProps> = () => {
                                 <FaShoppingCart size={20} />
                                 Cart
                             </Nav.Link>
-                            {Object.keys(userInfo).length !== 0 ? (
+                            {userInfo ? (
                                 <NavDropdown title={userInfo.name} id="username">
                                     <Nav.Link as={Link} to="/profile" className="p-0">
                                         <NavDropdown.Item>Profile</NavDropdown.Item>

@@ -7,6 +7,7 @@ import { Cart } from './pages/Cart';
 import { Home } from './pages/Home';
 import { Product } from './pages/Product';
 import { Login } from './pages/Login';
+import { Register } from './pages/Register';
 
 type AppProps = {};
 
@@ -20,6 +21,7 @@ const App: FC<AppProps> = () => {
                     <Route path="cart/:id" element={<Cart />} />
                     <Route path="cart" element={<Cart />} />
                     <Route path="login" element={<Login />} />
+                    <Route path="register" element={<Register />} />
                 </Route>
                 <Route path="*" element={<h1>not found</h1>} />
             </Routes>

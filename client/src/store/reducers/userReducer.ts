@@ -7,7 +7,7 @@ const userInfoFromStorage: UserType = getFromLocalstorage(LocalstorageKeys.USER_
 
 const userInitialState: UserState = {
     isLoading: false,
-    userInfo: userInfoFromStorage ? userInfoFromStorage : ({} as UserType),
+    userInfo: userInfoFromStorage ? userInfoFromStorage : null,
     error: null,
 };
 
@@ -25,7 +25,19 @@ const userReducer = (state = userInitialState, action: UserAction): UserState =>
     }
 
     if (action.type === UserActionTypes.USER_LOGOUT) {
-        return { ...state, isLoading: false, error: null, userInfo: {} as UserType };
+        return { ...state, isLoading: false, error: null, userInfo: null };
+    }
+
+    if (action.type === UserActionTypes.USER_REGISTER_BEGIN) {
+        return { ...state, isLoading: true, error: null };
+    }
+
+    if (action.type === UserActionTypes.USER_REGISTER_SUCCESS) {
+        return { ...state, isLoading: false, userInfo: action.payload.user, error: null };
+    }
+
+    if (action.type === UserActionTypes.USER_REGISTER_ERROR) {
+        return { ...state, isLoading: false, error: action.payload.msg };
     }
 
     return state;

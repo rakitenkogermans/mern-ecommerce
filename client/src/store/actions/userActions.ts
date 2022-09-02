@@ -30,4 +30,25 @@ const logout = () => async (dispatch: Dispatch<UserAction>) => {
     dispatch({ type: UserActionTypes.USER_LOGOUT });
 };
 
-export { login, logout };
+const register =
+    (name: string, email: string, password: string) => async (dispatch: Dispatch<UserAction>) => {
+        dispatch({ type: UserActionTypes.USER_REGISTER_BEGIN });
+        try {
+            const { data } = await axios.post<UserType>('/api/users', { name, email, password });
+            dispatch({ type: UserActionTypes.USER_REGISTER_SUCCESS, payload: { user: data } });
+            saveToLocalstorage(LocalstorageKeys.USER_INFO, data);
+        } catch (err) {
+            if (err instanceof AxiosError)
+                dispatch({
+                    type: UserActionTypes.USER_REGISTER_ERROR,
+                    payload: {
+                        msg:
+                            err.response && err.response.data.message
+                                ? err.response.data.message
+                                : err.message,
+                    },
+                });
+        }
+    };
+
+export { login, logout, register };

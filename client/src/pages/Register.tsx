@@ -7,12 +7,15 @@ import { useTypedSelector } from '../hooks/useTypedSelector';
 import { Message } from '../components/Message';
 import { Loader } from '../components/Loader';
 
-type LoginProps = {};
+type RegisterProps = {};
 
-const Login: FC<LoginProps> = () => {
+const Register: FC<RegisterProps> = () => {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { login } = useActions();
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [message, setMessage] = useState<string | null>(null);
+    const { register } = useActions();
     const { userInfo, isLoading, error } = useTypedSelector((state) => state.user);
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
@@ -26,15 +29,31 @@ const Login: FC<LoginProps> = () => {
 
     const submitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        login(email, password);
+        if (password !== confirmPassword) {
+            setMessage("Passwords don't match!");
+            return;
+        }
+        setMessage(null);
+        register(name, email, password);
     };
 
     return (
         <FormContainer>
-            <h1>Sign In</h1>
+            <h1>Sign Up</h1>
+            {message && <Message variant="danger">{message}</Message>}
             {error && <Message variant="danger">{error}</Message>}
             {isLoading && <Loader />}
             <Form onSubmit={submitHandler}>
+                <Form.Group controlId="name">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control
+                        type="name"
+                        placeholder="Enter name"
+                        value={name}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+                    />
+                </Form.Group>
+
                 <Form.Group controlId="email">
                     <Form.Label>Email Addres</Form.Label>
                     <Form.Control
@@ -55,23 +74,33 @@ const Login: FC<LoginProps> = () => {
                     />
                 </Form.Group>
 
+                <Form.Group controlId="password">
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Control
+                        type="password"
+                        placeholder="Confirm password"
+                        value={confirmPassword}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                            setConfirmPassword(e.target.value)
+                        }
+                    />
+                </Form.Group>
+
                 <Form.Group className="d-grid">
                     <Button type="submit" className="btn btn-primary btn-lg my-3">
-                        Sign In
+                        Register
                     </Button>
                 </Form.Group>
             </Form>
 
             <Row className="py-3">
                 <Col>
-                    New Customer?{' '}
-                    <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
-                        Register
-                    </Link>
+                    Already Registered?{' '}
+                    <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>Login</Link>
                 </Col>
             </Row>
         </FormContainer>
     );
 };
 
-export { Login };
+export { Register };
