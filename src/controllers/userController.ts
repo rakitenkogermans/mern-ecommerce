@@ -84,4 +84,33 @@ const getUserProfile = async (req: Request, res: Response) => {
   });
 };
 
-export { authUser, registerUser, getUserProfile };
+const updateUserProfile = async (
+  req: Request<{}, {}, { name: string; email: string; password: string }>,
+  res: Response
+) => {
+  const user = await User.findById(res.locals.userId).select("-password");
+
+  if (!user) {
+    res.status(StatusCodes.NOT_FOUND);
+    throw new Error("User not found");
+  }
+  const { name, email, password } = req.body;
+  user.name = name || user.name;
+  user.email = email || user.email;
+  if (password) {
+    user.password = password;
+  }
+
+  const updatedUser = await user.save();
+  const token = updatedUser.createJWT();
+
+  res.json({
+    _id: updatedUser._id,
+    email: updatedUser.email,
+    name: updatedUser.name,
+    isAdmin: updatedUser.isAdmin,
+    token,
+  });
+};
+
+export { authUser, registerUser, getUserProfile, updateUserProfile };
