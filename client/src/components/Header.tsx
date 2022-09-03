@@ -31,12 +31,15 @@ const Header: FC<HeaderProps> = () => {
                             </Nav.Link>
                             {userInfo ? (
                                 <NavDropdown title={userInfo.name} id="username">
-                                    <Nav.Link as={Link} to="/profile" className="p-0">
-                                        <NavDropdown.Item>Profile</NavDropdown.Item>
-                                    </Nav.Link>
-                                    <Nav.Link className="p-0">
+                                    <Nav>
+                                        <NavDropdown.Item as={Link} to="/profile">
+                                            Profile
+                                        </NavDropdown.Item>
+                                    </Nav>
+
+                                    <Nav className="p-0">
                                         <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
-                                    </Nav.Link>
+                                    </Nav>
                                 </NavDropdown>
                             ) : (
                                 <Nav.Link
