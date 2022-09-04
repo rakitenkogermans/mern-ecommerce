@@ -11,6 +11,7 @@ import { Register } from './pages/Register';
 import { Profile } from './pages/Profile';
 import { Shipping } from './pages/Shipping';
 import { Payment } from './pages/Payment';
+import { PlaceOrder } from './pages/PlaceOrder';
 
 type AppProps = {};
 
@@ -28,6 +29,7 @@ const App: FC<AppProps> = () => {
                     <Route path="profile" element={<Profile />} />
                     <Route path="shipping" element={<Shipping />} />
                     <Route path="payment" element={<Payment />} />
+                    <Route path="placeorder" element={<PlaceOrder />} />
                 </Route>
                 <Route path="*" element={<h1>not found</h1>} />
             </Routes>
