@@ -5,6 +5,7 @@ import { ProductType } from '../../@types/products';
 import { RootState } from '../reducers';
 import { saveToLocalstorage } from '../../utils/localstorage';
 import { LocalstorageKeys } from '../../@types/localstorage';
+import { ShippingType } from '../../@types/cart';
 
 const addToCart =
     (id: string, qty: number) =>
@@ -34,4 +35,9 @@ const removeFromCart =
         saveToLocalstorage(LocalstorageKeys.CART_ITEMS, getState().cart.cartItems);
     };
 
-export { addToCart, removeFromCart };
+const saveShippingAddress = (data: ShippingType) => async (dispatch: Dispatch<CartAction>) => {
+    dispatch({ type: CartActionTypes.CART_SAVE_SHIPPING_ADDRESS, payload: { data } });
+    saveToLocalstorage(LocalstorageKeys.SHIPPING_ADDRESS, data);
+};
+
+export { addToCart, removeFromCart, saveShippingAddress };

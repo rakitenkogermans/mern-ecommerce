@@ -3,9 +3,11 @@ import { LocalstorageKeys } from '../../@types/localstorage';
 import { getFromLocalstorage } from '../../utils/localstorage';
 
 const cartItemsFromStorage = getFromLocalstorage(LocalstorageKeys.CART_ITEMS);
+const shippingAddresFromStorage = getFromLocalstorage(LocalstorageKeys.SHIPPING_ADDRESS);
 
 const cartInitialState: CartState = {
     cartItems: cartItemsFromStorage ? cartItemsFromStorage : [],
+    shippingAddres: shippingAddresFromStorage ? shippingAddresFromStorage : null,
 };
 
 const cartReducer = (state = cartInitialState, action: CartAction): CartState => {
@@ -27,6 +29,13 @@ const cartReducer = (state = cartInitialState, action: CartAction): CartState =>
         return {
             ...state,
             cartItems: state.cartItems.filter((item) => item.product !== action.payload.id),
+        };
+    }
+
+    if (action.type === CartActionTypes.CART_SAVE_SHIPPING_ADDRESS) {
+        return {
+            ...state,
+            shippingAddres: action.payload.data,
         };
     }
 

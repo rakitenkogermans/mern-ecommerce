@@ -9,6 +9,7 @@ import { Product } from './pages/Product';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Profile } from './pages/Profile';
+import { Shipping } from './pages/Shipping';
 
 type AppProps = {};
 
@@ -24,6 +25,7 @@ const App: FC<AppProps> = () => {
                     <Route path="login" element={<Login />} />
                     <Route path="register" element={<Register />} />
                     <Route path="profile" element={<Profile />} />
+                    <Route path="shipping" element={<Shipping />} />
                 </Route>
                 <Route path="*" element={<h1>not found</h1>} />
             </Routes>

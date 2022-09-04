@@ -6,3 +6,5 @@ export type CartType = {
     countInStock: number;
     qty: number;
 };
+
+export type ShippingType = { address: string; city: string; postalCode: string; country: string };

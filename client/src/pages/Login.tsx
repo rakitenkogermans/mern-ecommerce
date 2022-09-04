@@ -16,11 +16,11 @@ const Login: FC<LoginProps> = () => {
     const { userInfo, isLoading, error } = useTypedSelector((state) => state.user);
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const redirect = searchParams.get('redirect') || '/';
+    const redirect = searchParams.get('redirect') || '';
 
     useEffect(() => {
         if (userInfo) {
-            navigate(redirect);
+            navigate(`/${redirect}`);
         }
     }, [navigate, userInfo, redirect]);
 
