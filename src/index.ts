@@ -5,6 +5,7 @@ import { connectDB } from "./db/connect";
 import { productsRouter } from "./routes/productsRoutes";
 import { errorHandler, notFound } from "./middlewares/errorMiddleware";
 import { userRouter } from "./routes/userRoutes";
+import { orderRouter } from "./routes/orderRoutes";
 
 config({ path: `.env.${process.env.NODE_ENV}` });
 
@@ -21,6 +22,7 @@ app.use(express.json());
 
 app.use("/api/products", productsRouter);
 app.use("/api/users", userRouter);
+app.use("/api/orders", orderRouter);
 
 app.use(notFound);
 app.use(errorHandler);
