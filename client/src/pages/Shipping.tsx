@@ -4,6 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { useActions } from '../hooks/useActions';
 import { useNavigate } from 'react-router-dom';
+import { CheckoutSteps } from '../components/CheckoutSteps';
 
 type ShippingProps = {};
 
@@ -24,6 +25,7 @@ const Shipping: FC<ShippingProps> = () => {
 
     return (
         <FormContainer>
+            <CheckoutSteps step1={true} step2={true} step3={false} step4={false} />
             <h1>Shipping</h1>
             <Form onSubmit={submitHandler}>
                 <Form.Group controlId="address">
