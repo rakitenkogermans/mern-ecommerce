@@ -40,4 +40,9 @@ const saveShippingAddress = (data: ShippingType) => async (dispatch: Dispatch<Ca
     saveToLocalstorage(LocalstorageKeys.SHIPPING_ADDRESS, data);
 };
 
-export { addToCart, removeFromCart, saveShippingAddress };
+const savePaymentMethod = (paymentMethod: string) => async (dispatch: Dispatch<CartAction>) => {
+    dispatch({ type: CartActionTypes.CART_SAVE_PAYMENT_METHOD, payload: { paymentMethod } });
+    saveToLocalstorage(LocalstorageKeys.PAYMENT_METHOD, paymentMethod);
+};
+
+export { addToCart, removeFromCart, saveShippingAddress, savePaymentMethod };

@@ -4,10 +4,12 @@ import { getFromLocalstorage } from '../../utils/localstorage';
 
 const cartItemsFromStorage = getFromLocalstorage(LocalstorageKeys.CART_ITEMS);
 const shippingAddresFromStorage = getFromLocalstorage(LocalstorageKeys.SHIPPING_ADDRESS);
+const paymentMethodFromStorage = getFromLocalstorage(LocalstorageKeys.PAYMENT_METHOD);
 
 const cartInitialState: CartState = {
     cartItems: cartItemsFromStorage ? cartItemsFromStorage : [],
-    shippingAddres: shippingAddresFromStorage ? shippingAddresFromStorage : null,
+    shippingAddress: shippingAddresFromStorage ? shippingAddresFromStorage : null,
+    paymentMethod: paymentMethodFromStorage ? paymentMethodFromStorage : '',
 };
 
 const cartReducer = (state = cartInitialState, action: CartAction): CartState => {
@@ -35,8 +37,12 @@ const cartReducer = (state = cartInitialState, action: CartAction): CartState =>
     if (action.type === CartActionTypes.CART_SAVE_SHIPPING_ADDRESS) {
         return {
             ...state,
-            shippingAddres: action.payload.data,
+            shippingAddress: action.payload.data,
         };
+    }
+
+    if (action.type === CartActionTypes.CART_SAVE_PAYMENT_METHOD) {
+        return { ...state, paymentMethod: action.payload.paymentMethod };
     }
 
     return state;

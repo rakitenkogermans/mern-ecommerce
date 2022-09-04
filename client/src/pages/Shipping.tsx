@@ -9,11 +9,11 @@ import { CheckoutSteps } from '../components/CheckoutSteps';
 type ShippingProps = {};
 
 const Shipping: FC<ShippingProps> = () => {
-    const { shippingAddres } = useTypedSelector((state) => state.cart);
-    const [address, setAddress] = useState(shippingAddres?.address || '');
-    const [city, setCity] = useState(shippingAddres?.city || '');
-    const [postalCode, setPostalCode] = useState(shippingAddres?.postalCode || '');
-    const [country, setCountry] = useState(shippingAddres?.country || '');
+    const { shippingAddress } = useTypedSelector((state) => state.cart);
+    const [address, setAddress] = useState(shippingAddress?.address || '');
+    const [city, setCity] = useState(shippingAddress?.city || '');
+    const [postalCode, setPostalCode] = useState(shippingAddress?.postalCode || '');
+    const [country, setCountry] = useState(shippingAddress?.country || '');
     const { saveShippingAddress } = useActions();
     const navigate = useNavigate();
 
