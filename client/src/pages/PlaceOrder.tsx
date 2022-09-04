@@ -1,14 +1,24 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { CheckoutSteps } from '../components/CheckoutSteps';
 import { Col, ListGroup, Row, Image, Card, Button } from 'react-bootstrap';
 import { Message } from '../components/Message';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useActions } from '../hooks/useActions';
 
 type PlaceOrderProps = {};
 
 const PlaceOrder: FC<PlaceOrderProps> = () => {
     const { cartItems, shippingAddress, paymentMethod } = useTypedSelector((state) => state.cart);
+    const { order, error, success } = useTypedSelector((state) => state.orderCreate);
+    const navigate = useNavigate();
+    const { createOrder } = useActions();
+
+    useEffect(() => {
+        if (success && order) {
+            navigate(`/order/${order._id}`);
+        }
+    }, [navigate, success]);
 
     //   Calculate prices
     const addDecimals = (num: number): number => {
@@ -18,10 +28,18 @@ const PlaceOrder: FC<PlaceOrderProps> = () => {
     const itemsPrice = addDecimals(cartItems.reduce((acc, item) => acc + item.price * item.qty, 0));
     const shippingPrice = addDecimals(itemsPrice > 100 ? 0 : 100);
     const taxPrice = addDecimals(Number((0.15 * itemsPrice).toFixed(2)));
-    const totalPrice = (Number(itemsPrice) + Number(shippingPrice) + Number(taxPrice)).toFixed(2);
+    const totalPrice = +(Number(itemsPrice) + Number(shippingPrice) + Number(taxPrice)).toFixed(2);
 
     const placeOrderHandler = () => {
-        console.log('p');
+        createOrder({
+            orderItems: cartItems,
+            shippingAddress: shippingAddress,
+            paymentMethod: paymentMethod,
+            itemsPrice: itemsPrice,
+            shippingPrice: shippingPrice,
+            taxPrice: taxPrice,
+            totalPrice: totalPrice,
+        });
     };
     return (
         <>
@@ -109,7 +127,7 @@ const PlaceOrder: FC<PlaceOrderProps> = () => {
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
-                                {/*{error && <Message variant="danger">{error}</Message>}*/}
+                                {error && <Message variant="danger">{error}</Message>}
                             </ListGroup.Item>
                             <ListGroup.Item className="d-grid">
                                 <Button
