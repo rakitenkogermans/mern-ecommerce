@@ -7,6 +7,17 @@ const getAllOrders = async (req: Request, res: Response) => {
   res.json(products);
 };
 
+const getOrderById = async (req: Request<{ id: string }>, res: Response) => {
+  const { id } = req.params;
+  const order = await Order.findById(id).populate("user", "name email");
+
+  if (!order) {
+    res.status(StatusCodes.NOT_FOUND);
+    throw new Error("Order not found");
+  }
+  res.json(order);
+};
+
 const addOrderItems = async (
   req: Request<
     {},
@@ -61,4 +72,4 @@ const addOrderItems = async (
   res.status(StatusCodes.CREATED).json(createdOrder);
 };
 
-export { getAllOrders, addOrderItems };
+export { getAllOrders, addOrderItems, getOrderById };

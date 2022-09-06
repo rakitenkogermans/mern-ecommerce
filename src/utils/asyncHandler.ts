@@ -1,13 +1,18 @@
 import { ParamsDictionary, Query } from "express-serve-static-core";
 import { RequestHandler } from "express";
 
-const asyncHandler = (
+const asyncHandler = <
+  P = ParamsDictionary,
+  ResBody = any,
+  ReqBody = any,
+  ReqQuery = Query
+>(
   fn: (
-    ...args: Parameters<RequestHandler<ParamsDictionary, any, any, Query>>
+    ...args: Parameters<RequestHandler<P, ResBody, ReqBody, ReqQuery>>
   ) => void | Promise<void>
-): RequestHandler<ParamsDictionary, any, any, Query> =>
+): RequestHandler<P, ResBody, ReqBody, ReqQuery> =>
   function asyncUtilWrap(
-    ...args: Parameters<RequestHandler<ParamsDictionary, any, any, Query>>
+    ...args: Parameters<RequestHandler<P, ResBody, ReqBody, ReqQuery>>
   ) {
     const fnReturn = fn(...args);
     const next: any = args[args.length - 1];

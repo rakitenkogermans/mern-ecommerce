@@ -7,7 +7,7 @@ const getAllProducts = async (req: Request, res: Response) => {
   res.json(products);
 };
 
-const getProduct = async (req: Request, res: Response) => {
+const getProduct = async (req: Request<{ id: string }>, res: Response) => {
   const product = await Product.findById(req.params.id);
   if (!product) {
     res.status(StatusCodes.NOT_FOUND);
