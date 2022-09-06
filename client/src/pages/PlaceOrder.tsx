@@ -28,7 +28,7 @@ const PlaceOrder: FC<PlaceOrderProps> = () => {
     const itemsPrice = addDecimals(cartItems.reduce((acc, item) => acc + item.price * item.qty, 0));
     const shippingPrice = addDecimals(itemsPrice > 100 ? 0 : 100);
     const taxPrice = addDecimals(Number((0.15 * itemsPrice).toFixed(2)));
-    const totalPrice = +(Number(itemsPrice) + Number(shippingPrice) + Number(taxPrice)).toFixed(2);
+    const totalPrice = (Number(itemsPrice) + Number(shippingPrice) + Number(taxPrice)).toFixed(2);
 
     const placeOrderHandler = () => {
         createOrder({
@@ -38,7 +38,7 @@ const PlaceOrder: FC<PlaceOrderProps> = () => {
             itemsPrice: itemsPrice,
             shippingPrice: shippingPrice,
             taxPrice: taxPrice,
-            totalPrice: totalPrice,
+            totalPrice: +totalPrice,
         });
     };
     return (
@@ -86,7 +86,7 @@ const PlaceOrder: FC<PlaceOrderProps> = () => {
                                                 </Col>
                                                 <Col md={4}>
                                                     {item.qty} x ${item.price} = $
-                                                    {item.qty * item.price}
+                                                    {(item.qty * item.price).toFixed(2)}
                                                 </Col>
                                             </Row>
                                         </ListGroup.Item>
