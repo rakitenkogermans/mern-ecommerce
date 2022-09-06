@@ -40,6 +40,10 @@ type Order = BaseOrder & {
     user: string;
 };
 
-type OrderDetails = BaseOrder & { user: { _id: string; name: string; email: string } };
+type OrderDetails = BaseOrder & {
+    user: { _id: string; name: string; email: string };
+    deliveredAt: Date;
+    paidAt: Date;
+};
 
 export { Order, OrderDetails, PaymentResult };

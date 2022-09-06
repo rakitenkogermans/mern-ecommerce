@@ -10,9 +10,12 @@ const orderDetailsInitialState: OrderDetailsState = {
     error: null,
 };
 
-const orderDetailsReducer = (state = orderDetailsInitialState, action: OrderDetailsAction) => {
+const orderDetailsReducer = (
+    state = orderDetailsInitialState,
+    action: OrderDetailsAction
+): OrderDetailsState => {
     if (action.type === OrderDetailsActionTypes.ORDER_DETAILS_BEGIN) {
-        return { ...state, isLoading: true, success: false };
+        return { ...state, isLoading: true };
     }
 
     if (action.type === OrderDetailsActionTypes.ORDER_DETAILS_SUCCES) {
@@ -25,7 +28,7 @@ const orderDetailsReducer = (state = orderDetailsInitialState, action: OrderDeta
     }
 
     if (action.type === OrderDetailsActionTypes.ORDER_DETAILS_ERROR) {
-        return { ...state, isLoading: false, success: false, error: action.payload.msg };
+        return { ...state, isLoading: false, error: action.payload.msg };
     }
 
     return state;

@@ -11,7 +11,10 @@ const orderInitialState: OrderCreateState = {
     error: null,
 };
 
-const orderCreateReducer = (state = orderInitialState, action: OrderCreateAction) => {
+const orderCreateReducer = (
+    state = orderInitialState,
+    action: OrderCreateAction
+): OrderCreateState => {
     if (action.type === OrderCreateActionTypes.ORDER_CREATE_BEGIN) {
         return { ...state, isLoading: true, success: false };
     }
