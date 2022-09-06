@@ -8,7 +8,6 @@ type OrderItems = {
 };
 
 type ShippingAddres = {
-    _id: string;
     address: string;
     city: string;
     postalCode: string;
@@ -23,18 +22,24 @@ type PaymentResult = {
     emailAddress: string;
 };
 
-export type Order = {
+type BaseOrder = {
     _id: string;
-    user: string;
     orderItems: OrderItems[];
     shippingAddress: ShippingAddres;
     paymentMethod: string;
-    paymentResult: PaymentResult;
     taxPrice: number;
     shippingPrice: number;
     totalPrice: number;
     isPaid: boolean;
-    paidAt: Date;
     isDelivered: boolean;
-    deliveredAt: Date;
+    createdAt: Date;
+    updatedAt: Date;
 };
+
+type Order = BaseOrder & {
+    user: string;
+};
+
+type OrderDetails = BaseOrder & { user: { _id: string; name: string; email: string } };
+
+export { Order, OrderDetails, PaymentResult };
