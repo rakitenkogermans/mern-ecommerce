@@ -18,7 +18,7 @@ const orderDetailsReducer = (
         return { ...state, isLoading: true };
     }
 
-    if (action.type === OrderDetailsActionTypes.ORDER_DETAILS_SUCCES) {
+    if (action.type === OrderDetailsActionTypes.ORDER_DETAILS_SUCCESS) {
         return {
             ...state,
             order: action.payload.order,

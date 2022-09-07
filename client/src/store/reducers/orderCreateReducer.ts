@@ -19,7 +19,7 @@ const orderCreateReducer = (
         return { ...state, isLoading: true, success: false };
     }
 
-    if (action.type === OrderCreateActionTypes.ORDER_CREATE_SUCCES) {
+    if (action.type === OrderCreateActionTypes.ORDER_CREATE_SUCCESS) {
         return {
             ...state,
             order: action.payload.order,
