@@ -18,7 +18,7 @@ interface ShippingAddres {
 }
 
 interface PaymentResult {
-  _id: Types.ObjectId;
+  // _id: Types.ObjectId;
   id: string;
   status: string;
   updateTime: string;
@@ -30,7 +30,7 @@ export interface IOrder {
   orderItems: Types.DocumentArray<OrderItems>;
   shippingAddress: Types.DocumentArray<ShippingAddres>;
   paymentMethod: string;
-  paymentResult: Types.DocumentArray<PaymentResult>;
+  paymentResult: PaymentResult;
   taxPrice: number;
   shippingPrice: number;
   totalPrice: number;
