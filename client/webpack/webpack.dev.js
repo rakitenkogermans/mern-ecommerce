@@ -5,14 +5,17 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 module.exports = {
     mode: 'development',
     devServer: {
+        static: {
+            directory: path.join(__dirname, '../public'),
+        },
         hot: true,
         open: true,
         compress: true,
         port: 3000,
         proxy: {
-            '/': {
-                target: 'http://localhost:9000',
-                // logLevel: 'debug' /*optional*/,
+            '/api': {
+                target: 'http://localhost:3000',
+                router: () => 'http://localhost:9000',
             },
         },
         historyApiFallback: true,
