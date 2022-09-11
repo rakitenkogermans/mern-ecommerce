@@ -1,3 +1,3 @@
-const NAME = process.env.NAME || '';
+const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID || '';
 
-export { NAME };
+export { PAYPAL_CLIENT_ID };

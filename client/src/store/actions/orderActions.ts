@@ -81,6 +81,7 @@ const getOrderDetails =
 const payOrder =
     (id: string, paymentResult: any) =>
     async (dispatch: Dispatch<OrderPayAction>, getState: () => RootState) => {
+        console.log('in payOrder function');
         dispatch({ type: OrderPayActionTypes.ORDER_PAY_BEGIN });
         try {
             const { userInfo } = getState().user;
@@ -96,6 +97,7 @@ const payOrder =
                 paymentResult,
                 config
             );
+            console.log('pay data', data);
 
             dispatch({
                 type: OrderPayActionTypes.ORDER_PAY_SUCCESS,
@@ -115,4 +117,7 @@ const payOrder =
         }
     };
 
-export { createOrder, getOrderDetails, payOrder };
+const payReset = () => async (dispatch: Dispatch<OrderPayAction>) =>
+    dispatch({ type: OrderPayActionTypes.ORDER_PAY_RESET });
+
+export { createOrder, getOrderDetails, payOrder, payReset };

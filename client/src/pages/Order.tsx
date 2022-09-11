@@ -1,23 +1,69 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useActions } from '../hooks/useActions';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { Loader } from '../components/Loader';
 import { Message } from '../components/Message';
-import { Col, ListGroup, Row, Image, Card } from 'react-bootstrap';
+import { Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
+import {
+    PayPalButtons,
+    SCRIPT_LOADING_STATE,
+    usePayPalScriptReducer,
+} from '@paypal/react-paypal-js';
+import { payOrder, payReset } from '../store/actions/orderActions';
 
 type OrderProps = {};
 
 const Order: FC<OrderProps> = () => {
+    const [{ isPending, isResolved }, dispatch] = usePayPalScriptReducer();
+    const [isPaid, setIsPaid] = useState(false);
     const { id } = useParams();
     const { getOrderDetails } = useActions();
     const { order, isLoading, error } = useTypedSelector((state) => state.orderDetails);
+    const { success: successPay, isLoading: isLoadingPay } = useTypedSelector(
+        (state) => state.orderPay
+    );
 
     useEffect(() => {
-        if (!order || order._id !== id) {
+        if (isPaid) {
+            payOrder(id || '', {});
+        }
+    }, [isPaid]);
+
+    useEffect(() => {
+        if (!order?.isPaid) {
+            dispatch({
+                type: 'setLoadingStatus',
+                value: SCRIPT_LOADING_STATE.PENDING,
+            });
+        }
+        if (!order || order._id !== id || successPay) {
+            payReset();
             getOrderDetails(id || '');
         }
-    }, [order, id]);
+    }, [order, id, successPay]);
+
+    const createOrder = (_: any, actions: any) => {
+        return actions.order.create({
+            purchase_units: [
+                {
+                    description: 'MERN Ecommerce Project',
+                    amount: {
+                        currency_code: 'USD',
+                        value: order?.totalPrice,
+                    },
+                },
+            ],
+        });
+    };
+
+    const successPaymentHandler = (_: any, actions: any) => {
+        return actions.order.capture().then(function (details: any) {
+            setIsPaid(true);
+            console.log('pay details', details);
+            payOrder(id || '', details);
+        });
+    };
 
     return isLoading ? (
         <Loader />
@@ -133,19 +179,26 @@ const Order: FC<OrderProps> = () => {
                                     <Col>${order.totalPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
-                            {/*{!order.isPaid && (*/}
-                            {/*    <ListGroup.Item>*/}
-                            {/*        {loadingPay && <Loader />}*/}
-                            {/*        {!sdkReady ? (*/}
-                            {/*            <Loader />*/}
-                            {/*        ) : (*/}
-                            {/*            <PayPalButton*/}
-                            {/*                amount={order.totalPrice}*/}
-                            {/*                onSuccess={successPaymentHandler}*/}
-                            {/*            />*/}
-                            {/*        )}*/}
-                            {/*    </ListGroup.Item>*/}
-                            {/*)}*/}
+                            {!order.isPaid && (
+                                <ListGroup.Item>
+                                    {isLoadingPay && <Loader />}
+                                    {isPending ? (
+                                        <Loader />
+                                    ) : isResolved ? (
+                                        <PayPalButtons
+                                            style={{ layout: 'horizontal', tagline: false }}
+                                            createOrder={createOrder}
+                                            onApprove={successPaymentHandler}
+                                        />
+                                    ) : (
+                                        // <PayPalButton
+                                        //     amount={order.totalPrice}
+                                        //     onSuccess={successPaymentHandler}
+                                        // />
+                                        <div>Cant load PayPal Button</div>
+                                    )}
+                                </ListGroup.Item>
+                            )}
                             {/*{loadingDeliver && <Loader />}*/}
                             {/*{userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (*/}
                             {/*    <ListGroup.Item>*/}
