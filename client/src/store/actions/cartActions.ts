@@ -1,11 +1,11 @@
 import { Dispatch } from 'redux';
-import { CartAction, CartActionTypes } from '../../@types/cart/cart';
+import { CartAction, CartActionTypes } from '../../types/cart/cart';
 import axios from 'axios';
-import { ProductType } from '../../@types/products';
+import { ProductType } from '../../types/products';
 import { RootState } from '../reducers';
 import { saveToLocalstorage } from '../../utils/localstorage';
-import { LocalstorageKeys } from '../../@types/localstorage';
-import { ShippingType } from '../../@types/cart';
+import { LocalstorageKeys } from '../../types/localstorage';
+import { ShippingType } from '../../types/cart';
 
 const addToCart =
     (id: string, qty: number) =>

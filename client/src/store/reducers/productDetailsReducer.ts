@@ -2,8 +2,8 @@ import {
     ProductDetailsAction,
     ProductDetailsActionTypes,
     ProductDetailsState,
-} from '../../@types/products/productDetails';
-import { ProductType } from '../../@types/products';
+} from '../../types/products/productDetails';
+import { ProductType } from '../../types/products';
 
 const productDetailsInitialState: ProductDetailsState = {
     isLoading: false,

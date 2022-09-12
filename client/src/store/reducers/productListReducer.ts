@@ -2,7 +2,7 @@ import {
     ProductListAction,
     ProductListActionTypes,
     ProductListState,
-} from '../../@types/products/productList';
+} from '../../types/products/productList';
 
 const productListInitialState: ProductListState = { isLoading: false, products: [], error: null };
 

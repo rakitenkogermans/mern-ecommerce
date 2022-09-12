@@ -10,10 +10,11 @@ import { protect } from "../middlewares/authMiddleware";
 
 const orderRouter = Router();
 
+orderRouter.route("/").post(asyncHandler(protect), asyncHandler(addOrderItems));
+
 orderRouter
-  .route("/")
-  .get(asyncHandler(getAllOrders))
-  .post(asyncHandler(protect), asyncHandler(addOrderItems));
+  .route("/allorders")
+  .get(asyncHandler(protect), asyncHandler(getAllOrders));
 
 orderRouter
   .route("/:id")

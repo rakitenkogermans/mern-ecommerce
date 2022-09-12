@@ -1,4 +1,4 @@
-import { OrderPayAction, OrderPayActionTypes, OrderPayState } from '../../@types/order/orderPay';
+import { OrderPayAction, OrderPayActionTypes, OrderPayState } from '../../types/order/orderPay';
 
 const orderPayInitialState: OrderPayState = {
     isLoading: false,

@@ -3,8 +3,8 @@ import { Order } from "../models/Order";
 import { StatusCodes } from "../constants/statusCodes";
 
 const getAllOrders = async (req: Request, res: Response) => {
-  const products = await Order.find({});
-  res.json(products);
+  const orders = await Order.find({ user: res.locals.userId });
+  res.json(orders);
 };
 
 const getOrderById = async (req: Request<{ id: string }>, res: Response) => {

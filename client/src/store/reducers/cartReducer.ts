@@ -1,5 +1,5 @@
-import { CartAction, CartActionTypes, CartState } from '../../@types/cart/cart';
-import { LocalstorageKeys } from '../../@types/localstorage';
+import { CartAction, CartActionTypes, CartState } from '../../types/cart/cart';
+import { LocalstorageKeys } from '../../types/localstorage';
 import { getFromLocalstorage } from '../../utils/localstorage';
 
 const cartItemsFromStorage = getFromLocalstorage(LocalstorageKeys.CART_ITEMS);

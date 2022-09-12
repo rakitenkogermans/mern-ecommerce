@@ -1,11 +1,11 @@
-import { ProductListAction, ProductListActionTypes } from '../../@types/products/productList';
+import { ProductListAction, ProductListActionTypes } from '../../types/products/productList';
 import { Dispatch } from 'redux';
 import axios, { AxiosError } from 'axios';
-import { ProductType } from '../../@types/products';
+import { ProductType } from '../../types/products';
 import {
     ProductDetailsAction,
     ProductDetailsActionTypes,
-} from '../../@types/products/productDetails';
+} from '../../types/products/productDetails';
 
 const listProducts = () => async (dispatch: Dispatch<ProductListAction>) => {
     dispatch({ type: ProductListActionTypes.PRODUCT_LIST_BEGIN });

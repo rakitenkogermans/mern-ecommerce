@@ -2,7 +2,7 @@ import {
     OrderCreateAction,
     OrderCreateActionTypes,
     OrderCreateState,
-} from '../../@types/order/orderCreate';
+} from '../../types/order/orderCreate';
 
 const orderInitialState: OrderCreateState = {
     isLoading: false,

@@ -1,6 +1,6 @@
-import { UserAction, UserActionTypes, UserState } from '../../@types/user/user';
-import { UserType } from '../../@types/user';
-import { LocalstorageKeys } from '../../@types/localstorage';
+import { UserAction, UserActionTypes, UserState } from '../../types/user/user';
+import { UserType } from '../../types/user';
+import { LocalstorageKeys } from '../../types/localstorage';
 import { getFromLocalstorage } from '../../utils/localstorage';
 
 const userInfoFromStorage: UserType = getFromLocalstorage(LocalstorageKeys.USER_INFO);

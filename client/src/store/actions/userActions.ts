@@ -1,9 +1,9 @@
 import { Dispatch } from 'redux';
-import { UserAction, UserActionTypes } from '../../@types/user/user';
+import { UserAction, UserActionTypes } from '../../types/user/user';
 import axios, { AxiosError } from 'axios';
-import { UserType } from '../../@types/user';
+import { UserType } from '../../types/user';
 import { removeFromLocalstorage, saveToLocalstorage } from '../../utils/localstorage';
-import { LocalstorageKeys } from '../../@types/localstorage';
+import { LocalstorageKeys } from '../../types/localstorage';
 import { RootState } from '../reducers';
 
 const login = (email: string, password: string) => async (dispatch: Dispatch<UserAction>) => {

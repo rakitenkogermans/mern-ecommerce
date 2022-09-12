@@ -2,7 +2,7 @@ import {
     OrderDetailsActionTypes,
     OrderDetailsAction,
     OrderDetailsState,
-} from '../../@types/order/orderDetails';
+} from '../../types/order/orderDetails';
 
 const orderDetailsInitialState: OrderDetailsState = {
     isLoading: false,
