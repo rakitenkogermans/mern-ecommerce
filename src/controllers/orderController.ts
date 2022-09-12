@@ -25,8 +25,8 @@ const updateOrderToPaid = async (
     {
       id: string;
       status: string;
-      updateTime: string;
-      payer: { emailAddress: string };
+      update_time: string;
+      payer: { email_address: string };
     }
   >,
   res: Response
@@ -43,8 +43,8 @@ const updateOrderToPaid = async (
   order.paymentResult = {
     id: req.body.id,
     status: req.body.status,
-    updateTime: req.body.updateTime,
-    emailAddress: req.body.payer.emailAddress,
+    updateTime: req.body.update_time,
+    emailAddress: req.body.payer.email_address,
   };
 
   const updatedOrder = await order.save();

@@ -6,6 +6,7 @@ import { OrderCreateAction, OrderCreateActionTypes } from '../../@types/order/or
 import { CartType, ShippingType } from '../../@types/cart';
 import { OrderDetailsAction, OrderDetailsActionTypes } from '../../@types/order/orderDetails';
 import { OrderPayAction, OrderPayActionTypes } from '../../@types/order/orderPay';
+import { OrderResponseBody } from '@paypal/paypal-js';
 
 const createOrder =
     (order: {
@@ -79,7 +80,7 @@ const getOrderDetails =
     };
 
 const payOrder =
-    (id: string, paymentResult: any) =>
+    (id: string, paymentResult: OrderResponseBody) =>
     async (dispatch: Dispatch<OrderPayAction>, getState: () => RootState) => {
         console.log('in payOrder function');
         dispatch({ type: OrderPayActionTypes.ORDER_PAY_BEGIN });

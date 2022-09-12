@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useActions } from '../hooks/useActions';
 import { useTypedSelector } from '../hooks/useTypedSelector';
@@ -10,28 +10,29 @@ import {
     SCRIPT_LOADING_STATE,
     usePayPalScriptReducer,
 } from '@paypal/react-paypal-js';
-import { payOrder, payReset } from '../store/actions/orderActions';
+import {
+    CreateOrderActions,
+    CreateOrderData,
+    OnApproveActions,
+    OnApproveData,
+    OrderResponseBody,
+} from '@paypal/paypal-js';
+import { date } from '../utils/date';
 
 type OrderProps = {};
 
 const Order: FC<OrderProps> = () => {
     const [{ isPending, isResolved }, dispatch] = usePayPalScriptReducer();
-    const [isPaid, setIsPaid] = useState(false);
     const { id } = useParams();
-    const { getOrderDetails } = useActions();
+    const { getOrderDetails, payOrder, payReset } = useActions();
     const { order, isLoading, error } = useTypedSelector((state) => state.orderDetails);
     const { success: successPay, isLoading: isLoadingPay } = useTypedSelector(
         (state) => state.orderPay
     );
 
     useEffect(() => {
-        if (isPaid) {
-            payOrder(id || '', {});
-        }
-    }, [isPaid]);
-
-    useEffect(() => {
-        if (!order?.isPaid) {
+        if (order && !order.isPaid) {
+            console.log('jjj');
             dispatch({
                 type: 'setLoadingStatus',
                 value: SCRIPT_LOADING_STATE.PENDING,
@@ -43,23 +44,23 @@ const Order: FC<OrderProps> = () => {
         }
     }, [order, id, successPay]);
 
-    const createOrder = (_: any, actions: any) => {
+    const createOrder = (_: CreateOrderData, actions: CreateOrderActions) => {
         return actions.order.create({
             purchase_units: [
                 {
                     description: 'MERN Ecommerce Project',
                     amount: {
                         currency_code: 'USD',
-                        value: order?.totalPrice,
+                        value: order?.totalPrice.toString() || '0',
                     },
                 },
             ],
         });
     };
 
-    const successPaymentHandler = (_: any, actions: any) => {
-        return actions.order.capture().then(function (details: any) {
-            setIsPaid(true);
+    const successPaymentHandler = (_: OnApproveData, actions: OnApproveActions) => {
+        if (!actions.order) return Promise.reject();
+        return actions.order.capture().then((details: OrderResponseBody) => {
             console.log('pay details', details);
             payOrder(id || '', details);
         });
@@ -93,7 +94,7 @@ const Order: FC<OrderProps> = () => {
                             </p>
                             {order.isDelivered ? (
                                 <Message variant="success">
-                                    <>Delivered on {order.deliveredAt}</>
+                                    <>Delivered on {date(order.deliveredAt)}</>
                                 </Message>
                             ) : (
                                 <Message variant="danger">Not Delivered</Message>
@@ -108,7 +109,7 @@ const Order: FC<OrderProps> = () => {
                             </p>
                             {order.isPaid ? (
                                 <Message variant="success">
-                                    <>Paid on {order.paidAt}</>
+                                    <>Paid on {date(order.paidAt)}</>
                                 </Message>
                             ) : (
                                 <Message variant="danger">Not Paid</Message>
@@ -191,10 +192,6 @@ const Order: FC<OrderProps> = () => {
                                             onApprove={successPaymentHandler}
                                         />
                                     ) : (
-                                        // <PayPalButton
-                                        //     amount={order.totalPrice}
-                                        //     onSuccess={successPaymentHandler}
-                                        // />
                                         <div>Cant load PayPal Button</div>
                                     )}
                                 </ListGroup.Item>
