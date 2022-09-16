@@ -51,6 +51,26 @@ const Header: FC<HeaderProps> = () => {
                                     Sign in
                                 </Nav.Link>
                             )}
+                            {userInfo && userInfo.isAdmin && (
+                                <NavDropdown title="Admin" id="admin">
+                                    <Nav>
+                                        <NavDropdown.Item as={Link} to="/admin/userlist">
+                                            Users
+                                        </NavDropdown.Item>
+                                    </Nav>
+                                    <Nav>
+                                        <NavDropdown.Item as={Link} to="/admin/productlist">
+                                            Products
+                                        </NavDropdown.Item>
+                                    </Nav>
+
+                                    <Nav>
+                                        <NavDropdown.Item as={Link} to="/admin/orderlist">
+                                            Orders
+                                        </NavDropdown.Item>
+                                    </Nav>
+                                </NavDropdown>
+                            )}
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

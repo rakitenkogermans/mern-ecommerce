@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './assets/styles/bootstrap.min.css';
 import './assets/styles/main.css';
 import { SharedLayout } from './components/SharedLayout';
@@ -13,6 +13,7 @@ import { Shipping } from './pages/Shipping';
 import { Payment } from './pages/Payment';
 import { PlaceOrder } from './pages/PlaceOrder';
 import { Order } from './pages/Order';
+import { UserList } from './pages/UserList';
 
 type AppProps = {};
 
@@ -32,6 +33,11 @@ const App: FC<AppProps> = () => {
                     <Route path="payment" element={<Payment />} />
                     <Route path="placeorder" element={<PlaceOrder />} />
                     <Route path="order/:id" element={<Order />} />
+                    <Route path="admin">
+                        <Route index element={<Navigate replace to="userlist" />} />
+                        <Route path="userlist" element={<UserList />} />
+                        <Route path="*" element={<Navigate replace to="userlist" />} />
+                    </Route>
                 </Route>
                 <Route path="*" element={<h1>not found</h1>} />
             </Routes>

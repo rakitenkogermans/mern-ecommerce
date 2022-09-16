@@ -7,12 +7,14 @@ import { orderCreateReducer } from './orderCreateReducer';
 import { orderDetailsReducer } from './orderDetailsReducer';
 import { orderPayReducer } from './orderPayReducer';
 import { orderListClientReducer } from './orderListClientReducer';
+import { userListReducer } from './userListReducer';
 
 export const rootReducer = combineReducers({
     productList: productListReducer,
     productDetails: productDetailsReducer,
     cart: cartReducer,
     user: userReducer,
+    userList: userListReducer,
     orderCreate: orderCreateReducer,
     orderDetails: orderDetailsReducer,
     orderPay: orderPayReducer,

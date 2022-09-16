@@ -22,7 +22,6 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
 
 const admin = async (req: Request, res: Response, next: NextFunction) => {
   const user = await User.findById(res.locals.userId);
-  console.log(user);
   if (user && user.isAdmin) {
     next();
     return;
