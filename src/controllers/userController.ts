@@ -118,4 +118,21 @@ const getUsers = async (req: Request, res: Response) => {
   res.json(users);
 };
 
-export { authUser, registerUser, getUserProfile, updateUserProfile, getUsers };
+const removeUser = async (req: Request<{ id: string }>, res: Response) => {
+  const user = await User.findById(req.params.id);
+  if (!user) {
+    res.status(StatusCodes.NOT_FOUND);
+    throw new Error("User not found");
+  }
+  await user.remove();
+  res.json({ message: "User removed" });
+};
+
+export {
+  authUser,
+  registerUser,
+  getUserProfile,
+  updateUserProfile,
+  getUsers,
+  removeUser,
+};

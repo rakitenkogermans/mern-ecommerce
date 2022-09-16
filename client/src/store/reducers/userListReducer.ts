@@ -1,4 +1,4 @@
-import { UserListActionTypes, UserListState, UsersListAction } from '../../types/user/userList';
+import { UserListActionTypes, UserListState, UserListAction } from '../../types/user/userList';
 
 const userListInitialState: UserListState = {
     isLoading: false,
@@ -6,7 +6,7 @@ const userListInitialState: UserListState = {
     error: null,
 };
 
-const userListReducer = (state = userListInitialState, action: UsersListAction): UserListState => {
+const userListReducer = (state = userListInitialState, action: UserListAction): UserListState => {
     if (action.type === UserListActionTypes.USER_LIST_BEGIN) {
         return { ...state, isLoading: true, error: null };
     }

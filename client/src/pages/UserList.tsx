@@ -13,7 +13,14 @@ const UserList: FC<UserListProps> = () => {
     const navigate = useNavigate();
     const { userInfo } = useTypedSelector((state) => state.user);
     const { users, isLoading, error } = useTypedSelector((state) => state.userList);
-    const { listUsers } = useActions();
+    const { success: successDelete } = useTypedSelector((state) => state.userDelete);
+    const { listUsers, deleteUser } = useActions();
+
+    useEffect(() => {
+        if (successDelete) {
+            listUsers();
+        }
+    }, [successDelete]);
 
     useEffect(() => {
         if (!(userInfo && userInfo.isAdmin)) {
@@ -24,7 +31,7 @@ const UserList: FC<UserListProps> = () => {
     }, [userInfo, navigate]);
 
     const deleteHandler = (id: string) => {
-        console.log('delete ' + id);
+        deleteUser(id);
     };
 
     return (

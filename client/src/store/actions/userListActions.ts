@@ -1,10 +1,10 @@
 import { Dispatch } from 'redux';
 import axios, { AxiosError } from 'axios';
 import { UserListType } from '../../types/user';
-import { UserListActionTypes, UsersListAction } from '../../types/user/userList';
+import { UserListActionTypes, UserListAction } from '../../types/user/userList';
 import { RootState } from '../reducers';
 
-const listUsers = () => async (dispatch: Dispatch<UsersListAction>, getState: () => RootState) => {
+const listUsers = () => async (dispatch: Dispatch<UserListAction>, getState: () => RootState) => {
     dispatch({ type: UserListActionTypes.USER_LIST_BEGIN });
     try {
         const { userInfo } = getState().user;
@@ -30,7 +30,7 @@ const listUsers = () => async (dispatch: Dispatch<UsersListAction>, getState: ()
     }
 };
 
-const listUserReset = () => async (dispatch: Dispatch<UsersListAction>) => {
+const listUserReset = () => async (dispatch: Dispatch<UserListAction>) => {
     dispatch({ type: UserListActionTypes.USER_LIST_RESET });
 };
 
