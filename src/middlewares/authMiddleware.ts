@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 import { StatusCodes } from "../constants/statusCodes";
+import { User } from "../models/User";
 
 const protect = async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
@@ -19,4 +20,15 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { protect };
+const admin = async (req: Request, res: Response, next: NextFunction) => {
+  const user = await User.findById(res.locals.userId);
+  console.log(user);
+  if (user && user.isAdmin) {
+    next();
+    return;
+  }
+  res.status(StatusCodes.UNAUTHORIZED);
+  throw new Error("Authentication Invalid");
+};
+
+export { protect, admin };

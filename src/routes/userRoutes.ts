@@ -3,14 +3,18 @@ import { asyncHandler } from "../utils/asyncHandler";
 import {
   authUser,
   getUserProfile,
+  getUsers,
   registerUser,
   updateUserProfile,
 } from "../controllers/userController";
-import { protect } from "../middlewares/authMiddleware";
+import { admin, protect } from "../middlewares/authMiddleware";
 
 const userRouter = Router();
 
-userRouter.route("/").post(asyncHandler(registerUser));
+userRouter
+  .route("/")
+  .get(asyncHandler(protect), asyncHandler(admin), asyncHandler(getUsers))
+  .post(asyncHandler(registerUser));
 userRouter.route("/login").post(asyncHandler(authUser));
 userRouter
   .route("/profile")

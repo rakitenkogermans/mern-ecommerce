@@ -113,4 +113,9 @@ const updateUserProfile = async (
   });
 };
 
-export { authUser, registerUser, getUserProfile, updateUserProfile };
+const getUsers = async (req: Request, res: Response) => {
+  const users = await User.find({});
+  res.json(users);
+};
+
+export { authUser, registerUser, getUserProfile, updateUserProfile, getUsers };
