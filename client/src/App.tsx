@@ -34,9 +34,9 @@ const App: FC<AppProps> = () => {
                     <Route path="placeorder" element={<PlaceOrder />} />
                     <Route path="order/:id" element={<Order />} />
                     <Route path="admin">
-                        <Route index element={<Navigate replace to="userlist" />} />
+                        <Route index element={<Navigate to="userlist" />} />
                         <Route path="userlist" element={<UserList />} />
-                        <Route path="*" element={<Navigate replace to="userlist" />} />
+                        <Route path="*" element={<Navigate to="userlist" />} />
                     </Route>
                 </Route>
                 <Route path="*" element={<h1>not found</h1>} />

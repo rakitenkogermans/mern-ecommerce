@@ -5,6 +5,7 @@ import { UserType } from '../../types/user';
 import { removeFromLocalstorage, saveToLocalstorage } from '../../utils/localstorage';
 import { LocalstorageKeys } from '../../types/localstorage';
 import { RootState } from '../reducers';
+import { UserListActionTypes, UsersListAction } from '../../types/user/userList';
 
 const login = (email: string, password: string) => async (dispatch: Dispatch<UserAction>) => {
     dispatch({ type: UserActionTypes.USER_LOGIN_BEGIN });
@@ -26,9 +27,10 @@ const login = (email: string, password: string) => async (dispatch: Dispatch<Use
     }
 };
 
-const logout = () => async (dispatch: Dispatch<UserAction>) => {
+const logout = () => async (dispatch: Dispatch<UserAction | UsersListAction>) => {
     removeFromLocalstorage(LocalstorageKeys.USER_INFO);
     dispatch({ type: UserActionTypes.USER_LOGOUT });
+    dispatch({ type: UserListActionTypes.USER_LIST_RESET });
 };
 
 const register =
@@ -61,7 +63,7 @@ const getUserProfile =
 
             const config = {
                 headers: {
-                    Authorization: `Bearer ${userInfo!.token}`,
+                    Authorization: `Bearer ${userInfo && userInfo.token}`,
                 },
             };
 
@@ -90,7 +92,7 @@ const updateUserProfile =
 
             const config = {
                 headers: {
-                    Authorization: `Bearer ${userInfo!.token}`,
+                    Authorization: `Bearer ${userInfo && userInfo.token}`,
                 },
             };
 

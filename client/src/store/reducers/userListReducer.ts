@@ -19,6 +19,10 @@ const userListReducer = (state = userListInitialState, action: UsersListAction):
         return { ...state, isLoading: false, error: action.payload.msg };
     }
 
+    if (action.type === UserListActionTypes.USER_LIST_RESET) {
+        return userListInitialState;
+    }
+
     return state;
 };
 

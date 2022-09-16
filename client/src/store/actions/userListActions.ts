@@ -30,4 +30,8 @@ const listUsers = () => async (dispatch: Dispatch<UsersListAction>, getState: ()
     }
 };
 
-export { listUsers };
+const listUserReset = () => async (dispatch: Dispatch<UsersListAction>) => {
+    dispatch({ type: UserListActionTypes.USER_LIST_RESET });
+};
+
+export { listUsers, listUserReset };

@@ -21,7 +21,7 @@ const UserList: FC<UserListProps> = () => {
             return;
         }
         listUsers();
-    }, []);
+    }, [userInfo, navigate]);
 
     const deleteHandler = (id: string) => {
         console.log('delete ' + id);
