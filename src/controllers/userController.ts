@@ -113,13 +113,51 @@ const updateUserProfile = async (
   });
 };
 
+const updateUserById = async (
+  req: Request<
+    { id: string },
+    {},
+    { name: string; email: string; isAdmin: boolean }
+  >,
+  res: Response
+) => {
+  const user = await User.findById(req.params.id).select("-password");
+
+  if (!user) {
+    res.status(StatusCodes.NOT_FOUND);
+    throw new Error("User not found");
+  }
+  const { name, email, isAdmin } = req.body;
+  user.name = name || user.name;
+  user.email = email || user.email;
+  user.isAdmin = isAdmin;
+
+  const updatedUser = await user.save();
+
+  res.json({
+    _id: updatedUser._id,
+    email: updatedUser.email,
+    name: updatedUser.name,
+    isAdmin: updatedUser.isAdmin,
+  });
+};
+
 const getUsers = async (req: Request, res: Response) => {
   const users = await User.find({}).select("-password");
   res.json(users);
 };
 
+const getUserById = async (req: Request<{ id: string }>, res: Response) => {
+  const user = await User.findById(req.params.id).select("-password");
+  if (!user) {
+    res.status(StatusCodes.NOT_FOUND);
+    throw new Error("User not found");
+  }
+  res.json(user);
+};
+
 const removeUser = async (req: Request<{ id: string }>, res: Response) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.params.id).select("-password");
   if (!user) {
     res.status(StatusCodes.NOT_FOUND);
     throw new Error("User not found");
@@ -135,4 +173,6 @@ export {
   updateUserProfile,
   getUsers,
   removeUser,
+  getUserById,
+  updateUserById,
 };
