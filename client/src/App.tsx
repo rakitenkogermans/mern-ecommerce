@@ -14,6 +14,7 @@ import { Payment } from './pages/Payment';
 import { PlaceOrder } from './pages/PlaceOrder';
 import { Order } from './pages/Order';
 import { UserList } from './pages/UserList';
+import { UserEdit } from './pages/UserEdit';
 
 type AppProps = {};
 
@@ -36,6 +37,7 @@ const App: FC<AppProps> = () => {
                     <Route path="admin">
                         <Route index element={<Navigate to="userlist" />} />
                         <Route path="userlist" element={<UserList />} />
+                        <Route path="user/:id/edit" element={<UserEdit />} />
                         <Route path="*" element={<Navigate to="userlist" />} />
                     </Route>
                 </Route>
