@@ -10,22 +10,32 @@ import { useActions } from '../hooks/useActions';
 type UserEditProps = {};
 
 const UserEdit: FC<UserEditProps> = () => {
+    const navigate = useNavigate();
     const { id } = useParams();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
-    const { getUserById, userDetailsReset } = useActions();
+    const { getUserById, userDetailsReset, updateUserDetails, updateUserDetailsReset } =
+        useActions();
     const { userInfo } = useTypedSelector((state) => state.user);
+    const {
+        success: succesUpdate,
+        isLoading: isLoadingUpdate,
+        error: errorUpdate,
+    } = useTypedSelector((state) => state.userDetailsUpdate);
     const {
         user,
         isLoading: isLoadingDetails,
         error: errorDetails,
     } = useTypedSelector((state) => state.userDetails);
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (!(userInfo && userInfo.isAdmin)) {
             navigate('/login');
+            return;
+        }
+        if (succesUpdate) {
+            navigate('/admin/userlist');
             return;
         }
         if (!user) {
@@ -38,12 +48,18 @@ const UserEdit: FC<UserEditProps> = () => {
             setIsAdmin(user.isAdmin);
         }
         return () => {
+            updateUserDetailsReset();
             userDetailsReset();
         };
-    }, [userInfo, navigate, user]);
+    }, [userInfo, navigate, user, succesUpdate]);
 
     const submitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if (user) {
+            const userUpdate = { ...user, name, email, isAdmin };
+            updateUserDetails(userUpdate);
+        }
     };
 
     return (
@@ -53,8 +69,8 @@ const UserEdit: FC<UserEditProps> = () => {
             </Link>
             <FormContainer>
                 <h1>Edit User</h1>
-                {/*{loadingUpdate && <Loader />}*/}
-                {/*{errorUpdate && <Message variant="danger">{errorUpdate}</Message>}*/}
+                {isLoadingUpdate && <Loader />}
+                {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
                 {isLoadingDetails ? (
                     <Loader />
                 ) : errorDetails ? (
@@ -96,9 +112,11 @@ const UserEdit: FC<UserEditProps> = () => {
                             ></Form.Check>
                         </Form.Group>
 
-                        <Button type="submit" variant="primary">
-                            Update
-                        </Button>
+                        <Form.Group className="d-grid">
+                            <Button type="submit" className="btn btn-primary btn-lg my-3">
+                                Update
+                            </Button>
+                        </Form.Group>
                     </Form>
                 )}
             </FormContainer>
