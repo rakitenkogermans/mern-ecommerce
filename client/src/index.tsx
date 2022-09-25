@@ -1,3 +1,4 @@
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
 import { Provider } from 'react-redux';
@@ -12,9 +13,11 @@ const root = createRoot(container);
 
 //render app to root
 root.render(
-    <PayPalScriptProvider deferLoading={true} options={{ 'client-id': PAYPAL_CLIENT_ID }}>
-        <Provider store={store}>
-            <App />
-        </Provider>
-    </PayPalScriptProvider>
+    <React.StrictMode>
+        <PayPalScriptProvider deferLoading={true} options={{ 'client-id': PAYPAL_CLIENT_ID }}>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </PayPalScriptProvider>
+    </React.StrictMode>
 );
