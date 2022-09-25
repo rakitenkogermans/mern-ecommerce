@@ -16,6 +16,7 @@ import { Order } from './pages/Order';
 import { UserList } from './pages/UserList';
 import { UserEdit } from './pages/UserEdit';
 import { ProductList } from './pages/ProductList';
+import { NotFound } from './pages/NotFound';
 
 type AppProps = {};
 
@@ -42,7 +43,7 @@ const App: FC<AppProps> = () => {
                         <Route path="user/:id/edit" element={<UserEdit />} />
                         <Route path="*" element={<Navigate to="userlist" />} />
                     </Route>
-                    <Route path="*" element={<h1>Not found</h1>} />
+                    <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>
         </BrowserRouter>
