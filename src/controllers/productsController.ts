@@ -26,4 +26,66 @@ const removeProduct = async (req: Request<{ id: string }>, res: Response) => {
   res.json({ message: "Product removed" });
 };
 
-export { getProduct, getAllProducts, removeProduct };
+const createProduct = async (req: Request, res: Response) => {
+  const product = new Product({
+    name: "Sample name",
+    price: 0,
+    user: res.locals.userId,
+    image: "/images/sample.jpg",
+    brand: "Sample brand",
+    category: "Sample category",
+    countInStock: 0,
+    numReviews: 0,
+    description: "Sample description",
+  });
+
+  const createdProduct = await product.save();
+  res.status(StatusCodes.OK).json(createdProduct);
+};
+
+const updateProduct = async (
+  req: Request<
+    { id: string },
+    {},
+    {
+      id: string;
+      name: string;
+      image: string;
+      brand: string;
+      category: string;
+      description: string;
+      price: string;
+      countInStock: string;
+    }
+  >,
+  res: Response
+) => {
+  const { name, image, brand, category, description, price, countInStock } =
+    req.body;
+
+  const product = await Product.findById(req.params.id);
+
+  if (!product) {
+    res.status(StatusCodes.NOT_FOUND);
+    throw new Error("Product not found");
+  }
+
+  product.name = name;
+  product.price = Number(price);
+  product.description = description;
+  product.image = image;
+  product.brand = brand;
+  product.category = category;
+  product.countInStock = Number(countInStock);
+
+  const updatedProduct = await product.save();
+  res.json(updatedProduct);
+};
+
+export {
+  getProduct,
+  getAllProducts,
+  removeProduct,
+  createProduct,
+  updateProduct,
+};
