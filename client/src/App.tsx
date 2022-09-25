@@ -42,8 +42,8 @@ const App: FC<AppProps> = () => {
                         <Route path="user/:id/edit" element={<UserEdit />} />
                         <Route path="*" element={<Navigate to="userlist" />} />
                     </Route>
+                    <Route path="*" element={<h1>Not found</h1>} />
                 </Route>
-                <Route path="*" element={<h1>not found</h1>} />
             </Routes>
         </BrowserRouter>
     );

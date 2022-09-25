@@ -18,7 +18,6 @@ const ProductSchema: Schema = new Schema<IProductModel>(
     image: {
       type: String,
       required: [true, "Please provide image"],
-      unique: true,
     },
     brand: {
       type: String,

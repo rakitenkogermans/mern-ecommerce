@@ -3,11 +3,10 @@ import {
     ProductDetailsActionTypes,
     ProductDetailsState,
 } from '../../types/products/productDetails';
-import { ProductType } from '../../types/products';
 
 const productDetailsInitialState: ProductDetailsState = {
     isLoading: false,
-    product: {} as ProductType,
+    product: null,
     error: null,
 };
 

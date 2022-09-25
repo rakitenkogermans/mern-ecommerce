@@ -13,8 +13,18 @@ const ProductList: FC<ProductListProps> = () => {
     const navigate = useNavigate();
     const { userInfo } = useTypedSelector((state) => state.user);
     const { products, isLoading, error } = useTypedSelector((state) => state.productList);
-    const { success: successDelete } = useTypedSelector((state) => state.productDelete);
-    const { listProducts, deleteProduct } = useActions();
+    const {
+        success: successDelete,
+        isLoading: isLoadingDelete,
+        error: errorDelete,
+    } = useTypedSelector((state) => state.productDelete);
+    const {
+        success: successCreate,
+        product: createdProduct,
+        isLoading: isLoadingCreate,
+        error: errorCreate,
+    } = useTypedSelector((state) => state.productCreate);
+    const { listProducts, deleteProduct, createProduct, createProductReset } = useActions();
 
     useEffect(() => {
         if (successDelete) {
@@ -23,10 +33,17 @@ const ProductList: FC<ProductListProps> = () => {
     }, [successDelete]);
 
     useEffect(() => {
+        if (successCreate && createdProduct) {
+            navigate(`/admin/product/${createdProduct._id}/edit`);
+        }
+    }, [successCreate, createdProduct, navigate]);
+
+    useEffect(() => {
         if (!(userInfo && userInfo.isAdmin)) {
             navigate('/login');
             return;
         }
+        createProductReset();
         listProducts();
     }, [userInfo, navigate]);
 
@@ -35,7 +52,7 @@ const ProductList: FC<ProductListProps> = () => {
     };
 
     const createProductHandler = () => {
-        console.log('p');
+        createProduct();
     };
 
     return (
@@ -50,6 +67,10 @@ const ProductList: FC<ProductListProps> = () => {
                     </Button>
                 </Col>
             </Row>
+            {isLoadingDelete && <Loader />}
+            {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+            {isLoadingCreate && <Loader />}
+            {errorCreate && <Message variant="danger">{errorCreate}</Message>}
             {isLoading ? (
                 <Loader />
             ) : error ? (

@@ -1,6 +1,10 @@
 import { ProductType } from './index';
 
-type ProductDetailsState = { isLoading: boolean; product: ProductType; error: null | string };
+type ProductDetailsState = {
+    isLoading: boolean;
+    product: ProductType | null;
+    error: null | string;
+};
 
 enum ProductDetailsActionTypes {
     PRODUCT_DETAILS_BEGIN = 'PRODUCT_DETAILS_BEGIN',

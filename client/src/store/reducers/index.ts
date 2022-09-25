@@ -12,11 +12,13 @@ import { userDeleteReducer } from './userDeleteReducer';
 import { userDetailsReducer } from './userDetailsReducer';
 import { userDetailsUpdateReducer } from './userDetailsUpdateReducer';
 import { productDeleteReducer } from './productDeleteReducer';
+import { productCreateReducer } from './productCreateReducer';
 
 export const rootReducer = combineReducers({
     productList: productListReducer,
     productDetails: productDetailsReducer,
     productDelete: productDeleteReducer,
+    productCreate: productCreateReducer,
     cart: cartReducer,
     user: userReducer,
     userList: userListReducer,
