@@ -13,14 +13,14 @@ const ProductList: FC<ProductListProps> = () => {
     const navigate = useNavigate();
     const { userInfo } = useTypedSelector((state) => state.user);
     const { products, isLoading, error } = useTypedSelector((state) => state.productList);
-    // const { success: successDelete } = useTypedSelector((state) => state.userDelete);
-    const { listProducts } = useActions();
+    const { success: successDelete } = useTypedSelector((state) => state.productDelete);
+    const { listProducts, deleteProduct } = useActions();
 
-    // useEffect(() => {
-    //     if (successDelete) {
-    //         listUsers();
-    //     }
-    // }, [successDelete]);
+    useEffect(() => {
+        if (successDelete) {
+            listProducts();
+        }
+    }, [successDelete]);
 
     useEffect(() => {
         if (!(userInfo && userInfo.isAdmin)) {
@@ -31,8 +31,7 @@ const ProductList: FC<ProductListProps> = () => {
     }, [userInfo, navigate]);
 
     const deleteHandler = (id: string) => {
-        // deleteUser(id);
-        console.log(id);
+        deleteProduct(id);
     };
 
     const createProductHandler = () => {
