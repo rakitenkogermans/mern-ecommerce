@@ -32,20 +32,25 @@ const ProductList: FC<ProductListProps> = () => {
         }
     }, [successDelete]);
 
-    useEffect(() => {
-        if (successCreate && createdProduct) {
-            navigate(`/admin/product/${createdProduct._id}/edit`);
-        }
-    }, [successCreate, createdProduct, navigate]);
+    // useEffect(() => {
+    //
+    // }, [successCreate, createdProduct, navigate]);
 
     useEffect(() => {
         if (!(userInfo && userInfo.isAdmin)) {
             navigate('/login');
             return;
         }
-        createProductReset();
+        if (successCreate && createdProduct) {
+            navigate(`/admin/product/${createdProduct._id}/edit`);
+            return;
+        }
+        // createProductReset();
         listProducts();
-    }, [userInfo, navigate]);
+        return () => {
+            createProductReset();
+        };
+    }, [userInfo, navigate, successCreate, createdProduct]);
 
     const deleteHandler = (id: string) => {
         deleteProduct(id);

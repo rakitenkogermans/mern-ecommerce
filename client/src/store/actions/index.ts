@@ -8,6 +8,7 @@ import * as UserDetailsActionCreators from './userDetailsActions';
 import * as UserDetailsUpdateActionCreators from './userDetailsUpdateActions';
 import * as ProductDeleteActionCreators from './productDeleteAction';
 import * as ProductCreateActionCreators from './productCreateActions';
+import * as ProductUpdateActionCreators from './productUpdateActions';
 
 export const ActionCreators = {
     ...ProductActionCreators,
@@ -20,4 +21,5 @@ export const ActionCreators = {
     ...OrderActionCreators,
     ...ProductDeleteActionCreators,
     ...ProductCreateActionCreators,
+    ...ProductUpdateActionCreators,
 };

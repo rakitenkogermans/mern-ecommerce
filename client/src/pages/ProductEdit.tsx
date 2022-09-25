@@ -20,13 +20,13 @@ const ProductEdit: FC<ProductEditProps> = () => {
     const [countInStock, setCountInStock] = useState(0);
     const [description, setDescription] = useState('');
     // const [uploading, setUploading] = useState(false);
-    const { listProductDetails } = useActions();
+    const { listProductDetails, updateProduct, updateProductReset } = useActions();
     const { userInfo } = useTypedSelector((state) => state.user);
     const {
-        // success: succesUpdate,
+        success: succesUpdate,
         isLoading: isLoadingUpdate,
         error: errorUpdate,
-    } = useTypedSelector((state) => state.userDetailsUpdate);
+    } = useTypedSelector((state) => state.productUpdate);
     const {
         product,
         isLoading: isLoadingDetails,
@@ -35,15 +35,24 @@ const ProductEdit: FC<ProductEditProps> = () => {
 
     useEffect(() => {
         listProductDetails(id || '');
+        return () => {
+            updateProductReset();
+        };
     }, []);
+
     useEffect(() => {
         if (!(userInfo && userInfo.isAdmin)) {
             navigate('/login');
             return;
         }
-        // if (succesUpdate) {
-        //     navigate('/admin/productlist');
-        //     return;
+
+        if (succesUpdate) {
+            navigate('/admin/productlist');
+            return;
+        }
+
+        // if (!product) {
+        //     listProductDetails(id || '');
         // }
 
         if (product) {
@@ -55,7 +64,11 @@ const ProductEdit: FC<ProductEditProps> = () => {
             setCountInStock(product.countInStock);
             setDescription(product.description);
         }
-    }, [userInfo, navigate, product]);
+
+        // return () => {
+        //     updateProductReset();
+        // };
+    }, [userInfo, navigate, product, succesUpdate]);
 
     // const uploadFileHandler = async () => {
     //     console.log('kkk');
@@ -63,7 +76,20 @@ const ProductEdit: FC<ProductEditProps> = () => {
 
     const submitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('ppp');
+
+        if (product) {
+            const productUpdate = {
+                ...product,
+                name,
+                price,
+                image,
+                brand,
+                category,
+                countInStock,
+                description,
+            };
+            updateProduct(productUpdate);
+        }
     };
 
     return (
