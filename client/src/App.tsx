@@ -17,6 +17,7 @@ import { UserList } from './pages/UserList';
 import { UserEdit } from './pages/UserEdit';
 import { ProductList } from './pages/ProductList';
 import { NotFound } from './pages/NotFound';
+import { ProductEdit } from './pages/ProductEdit';
 
 type AppProps = {};
 
@@ -41,6 +42,7 @@ const App: FC<AppProps> = () => {
                         <Route path="userlist" element={<UserList />} />
                         <Route path="productlist" element={<ProductList />} />
                         <Route path="user/:id/edit" element={<UserEdit />} />
+                        <Route path="product/:id/edit" element={<ProductEdit />} />
                         <Route path="*" element={<Navigate to="userlist" />} />
                     </Route>
                     <Route path="*" element={<NotFound />} />

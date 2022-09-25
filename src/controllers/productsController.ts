@@ -31,7 +31,7 @@ const createProduct = async (req: Request, res: Response) => {
     name: "Sample name",
     price: 0,
     user: res.locals.userId,
-    image: "/images/sample.jpg",
+    image: "/assets/images/sample.jpg",
     brand: "Sample brand",
     category: "Sample category",
     countInStock: 0,
@@ -48,7 +48,6 @@ const updateProduct = async (
     { id: string },
     {},
     {
-      id: string;
       name: string;
       image: string;
       brand: string;
@@ -70,13 +69,13 @@ const updateProduct = async (
     throw new Error("Product not found");
   }
 
-  product.name = name;
-  product.price = Number(price);
-  product.description = description;
-  product.image = image;
-  product.brand = brand;
-  product.category = category;
-  product.countInStock = Number(countInStock);
+  product.name = name || product.name;
+  product.price = Number(price) || product.price;
+  product.description = description || product.description;
+  product.image = image || product.image;
+  product.brand = brand || product.brand;
+  product.category = category || product.category;
+  product.countInStock = Number(countInStock) || product.countInStock;
 
   const updatedProduct = await product.save();
   res.json(updatedProduct);
