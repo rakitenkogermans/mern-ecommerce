@@ -2,19 +2,23 @@ import { Router } from "express";
 import { asyncHandler } from "../utils/asyncHandler";
 import {
   addOrderItems,
+  getAllClientOrders,
   getAllOrders,
   getOrderById,
   updateOrderToPaid,
 } from "../controllers/orderController";
-import { protect } from "../middlewares/authMiddleware";
+import { admin, protect } from "../middlewares/authMiddleware";
 
 const orderRouter = Router();
 
-orderRouter.route("/").post(asyncHandler(protect), asyncHandler(addOrderItems));
+orderRouter
+  .route("/")
+  .post(asyncHandler(protect), asyncHandler(addOrderItems))
+  .get(asyncHandler(protect), asyncHandler(admin), asyncHandler(getAllOrders));
 
 orderRouter
   .route("/allorders")
-  .get(asyncHandler(protect), asyncHandler(getAllOrders));
+  .get(asyncHandler(protect), asyncHandler(getAllClientOrders));
 
 orderRouter
   .route("/:id")

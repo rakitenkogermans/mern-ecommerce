@@ -11,6 +11,7 @@ import {
     OrderListClientAction,
     OrderListClientActionTypes,
 } from '../../types/order/orderListClient';
+import { OrderListAction, OrderListActionTypes } from '../../types/order/orderList';
 
 const createOrder =
     (order: {
@@ -156,4 +157,35 @@ const getAllOrdersForClient =
         }
     };
 
-export { createOrder, getOrderDetails, payOrder, payReset, getAllOrdersForClient };
+const getAllOrders =
+    () => async (dispatch: Dispatch<OrderListAction>, getState: () => RootState) => {
+        dispatch({ type: OrderListActionTypes.ORDER_LIST_BEGIN });
+        try {
+            const { userInfo } = getState().user;
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${userInfo && userInfo.token}`,
+                },
+            };
+
+            const { data } = await axios.get<OrderDetails[]>('/api/orders', config);
+            dispatch({
+                type: OrderListActionTypes.ORDER_LIST_SUCCESS,
+                payload: { orders: data },
+            });
+        } catch (err) {
+            if (err instanceof AxiosError)
+                dispatch({
+                    type: OrderListActionTypes.ORDER_LIST_ERROR,
+                    payload: {
+                        msg:
+                            err.response && err.response.data.message
+                                ? err.response.data.message
+                                : err.message,
+                    },
+                });
+        }
+    };
+
+export { createOrder, getOrderDetails, payOrder, payReset, getAllOrdersForClient, getAllOrders };

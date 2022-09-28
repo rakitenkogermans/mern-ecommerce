@@ -14,6 +14,7 @@ import { userDetailsUpdateReducer } from './userDetailsUpdateReducer';
 import { productDeleteReducer } from './productDeleteReducer';
 import { productCreateReducer } from './productCreateReducer';
 import { productUpdateReducer } from './productUpdateReducer';
+import { orderListReducer } from './orderListReducer';
 
 export const rootReducer = combineReducers({
     productList: productListReducer,
@@ -31,6 +32,7 @@ export const rootReducer = combineReducers({
     orderDetails: orderDetailsReducer,
     orderPay: orderPayReducer,
     orderListClient: orderListClientReducer,
+    orderList: orderListReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

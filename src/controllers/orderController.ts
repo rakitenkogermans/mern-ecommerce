@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Order } from "../models/Order";
 import { StatusCodes } from "../constants/statusCodes";
 
-const getAllOrders = async (req: Request, res: Response) => {
+const getAllClientOrders = async (req: Request, res: Response) => {
   const orders = await Order.find({ user: res.locals.userId });
   res.json(orders);
 };
@@ -105,4 +105,15 @@ const addOrderItems = async (
   res.status(StatusCodes.CREATED).json(createdOrder);
 };
 
-export { getAllOrders, addOrderItems, getOrderById, updateOrderToPaid };
+const getAllOrders = async (req: Request, res: Response) => {
+  const orders = await Order.find({}).populate("user", "id name");
+  res.json(orders);
+};
+
+export {
+  getAllClientOrders,
+  addOrderItems,
+  getOrderById,
+  updateOrderToPaid,
+  getAllOrders,
+};
