@@ -6,6 +6,7 @@ import { FormContainer } from '../components/FormContainer';
 import { Loader } from '../components/Loader';
 import { Message } from '../components/Message';
 import { Button, Form } from 'react-bootstrap';
+import axios from 'axios';
 
 type ProductEditProps = {};
 
@@ -19,7 +20,8 @@ const ProductEdit: FC<ProductEditProps> = () => {
     const [category, setCategory] = useState('');
     const [countInStock, setCountInStock] = useState(0);
     const [description, setDescription] = useState('');
-    // const [uploading, setUploading] = useState(false);
+    const [uploading, setUploading] = useState(false);
+
     const { listProductDetails, updateProduct, updateProductReset } = useActions();
     const { userInfo } = useTypedSelector((state) => state.user);
     const {
@@ -70,9 +72,35 @@ const ProductEdit: FC<ProductEditProps> = () => {
         // };
     }, [userInfo, navigate, product, succesUpdate]);
 
-    // const uploadFileHandler = async () => {
-    //     console.log('kkk');
-    // };
+    const uploadFileHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        const file = e.target.files && e.target.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('image', file);
+        setUploading(true);
+
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${userInfo && userInfo.token}`,
+                },
+            };
+
+            const { data } = await axios.post<string>('/api/upload', formData, config);
+
+            setImage(data);
+            setUploading(false);
+        } catch (err) {
+            console.error(err);
+            setUploading(false);
+        }
+    };
 
     const submitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -141,13 +169,16 @@ const ProductEdit: FC<ProductEditProps> = () => {
                                     setImage(e.target.value)
                                 }
                             ></Form.Control>
-                            {/*<Form.Label>Choose File</Form.Label>*/}
-                            {/*<Form.Control*/}
-                            {/*    type="file"*/}
-                            {/*    id="image-file"*/}
-                            {/*    onChange={uploadFileHandler}*/}
-                            {/*/>*/}
-                            {/*{uploading && <Loader />}*/}
+                        </Form.Group>
+
+                        <Form.Group>
+                            <Form.Label htmlFor="image-file">Choose File</Form.Label>
+                            <Form.Control
+                                type="file"
+                                id="image-file"
+                                onChange={uploadFileHandler}
+                            />
+                            {uploading && <Loader />}
                         </Form.Group>
 
                         <Form.Group controlId="brand">

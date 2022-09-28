@@ -6,6 +6,8 @@ import { productsRouter } from "./routes/productsRoutes";
 import { errorHandler, notFound } from "./middlewares/errorMiddleware";
 import { userRouter } from "./routes/userRoutes";
 import { orderRouter } from "./routes/orderRoutes";
+import { uploadRouter } from "./routes/uploadRoutes";
+import path from "path";
 
 config({ path: `.env.${process.env.NODE_ENV}` });
 
@@ -23,6 +25,9 @@ app.use(express.json());
 app.use("/api/products", productsRouter);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
+app.use("/api/upload", uploadRouter);
+
+app.use("/uploads", express.static(path.resolve(__dirname, "/uploads")));
 
 app.use(notFound);
 app.use(errorHandler);
