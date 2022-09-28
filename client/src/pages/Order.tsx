@@ -1,10 +1,10 @@
 import { FC, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useActions } from '../hooks/useActions';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { Loader } from '../components/Loader';
 import { Message } from '../components/Message';
-import { Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
+import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
 import {
     PayPalButtons,
     SCRIPT_LOADING_STATE,
@@ -22,27 +22,37 @@ import { date } from '../utils/date';
 type OrderProps = {};
 
 const Order: FC<OrderProps> = () => {
+    const navigate = useNavigate();
+    const { userInfo } = useTypedSelector((state) => state.user);
     const [{ isPending, isResolved }, dispatch] = usePayPalScriptReducer();
     const { id } = useParams();
-    const { getOrderDetails, payOrder, payReset } = useActions();
+    const { getOrderDetails, payOrder, payReset, deliverOrder, deliverReset } = useActions();
     const { order, isLoading, error } = useTypedSelector((state) => state.orderDetails);
     const { success: successPay, isLoading: isLoadingPay } = useTypedSelector(
         (state) => state.orderPay
     );
 
+    const { success: successDeliver, isLoading: isLoadingDeliver } = useTypedSelector(
+        (state) => state.orderDeliver
+    );
+
     useEffect(() => {
+        if (!userInfo) {
+            navigate('/login');
+            return;
+        }
         if (order && !order.isPaid) {
-            console.log('jjj');
             dispatch({
                 type: 'setLoadingStatus',
                 value: SCRIPT_LOADING_STATE.PENDING,
             });
         }
-        if (!order || order._id !== id || successPay) {
+        if (!order || order._id !== id || successPay || successDeliver) {
             payReset();
+            deliverReset();
             getOrderDetails(id || '');
         }
-    }, [order, id, successPay]);
+    }, [order, id, successPay, successDeliver]);
 
     const createOrder = (_: CreateOrderData, actions: CreateOrderActions) => {
         return actions.order.create({
@@ -64,6 +74,10 @@ const Order: FC<OrderProps> = () => {
             console.log('pay details', details);
             payOrder(id || '', details);
         });
+    };
+
+    const deliverHandler = () => {
+        deliverOrder(id || '');
     };
 
     return isLoading ? (
@@ -196,18 +210,18 @@ const Order: FC<OrderProps> = () => {
                                     )}
                                 </ListGroup.Item>
                             )}
-                            {/*{loadingDeliver && <Loader />}*/}
-                            {/*{userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (*/}
-                            {/*    <ListGroup.Item>*/}
-                            {/*        <Button*/}
-                            {/*            type="button"*/}
-                            {/*            className="btn btn-block"*/}
-                            {/*            onClick={deliverHandler}*/}
-                            {/*        >*/}
-                            {/*            Mark As Delivered*/}
-                            {/*        </Button>*/}
-                            {/*    </ListGroup.Item>*/}
-                            {/*)}*/}
+                            {isLoadingDeliver && <Loader />}
+                            {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                                <ListGroup.Item className="d-grid">
+                                    <Button
+                                        type="button"
+                                        className="btn btn-primary btn-lg"
+                                        onClick={deliverHandler}
+                                    >
+                                        Mark As Delivered
+                                    </Button>
+                                </ListGroup.Item>
+                            )}
                         </ListGroup>
                     </Card>
                 </Col>

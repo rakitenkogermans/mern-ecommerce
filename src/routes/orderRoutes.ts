@@ -5,6 +5,7 @@ import {
   getAllClientOrders,
   getAllOrders,
   getOrderById,
+  updateOrderToDelivered,
   updateOrderToPaid,
 } from "../controllers/orderController";
 import { admin, protect } from "../middlewares/authMiddleware";
@@ -27,5 +28,13 @@ orderRouter
 orderRouter
   .route("/:id/pay")
   .put(asyncHandler(protect), asyncHandler(updateOrderToPaid));
+
+orderRouter
+  .route("/:id/deliver")
+  .put(
+    asyncHandler(protect),
+    asyncHandler(admin),
+    asyncHandler(updateOrderToDelivered)
+  );
 
 export { orderRouter };

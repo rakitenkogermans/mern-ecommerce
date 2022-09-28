@@ -12,6 +12,7 @@ import {
     OrderListClientActionTypes,
 } from '../../types/order/orderListClient';
 import { OrderListAction, OrderListActionTypes } from '../../types/order/orderList';
+import { OrderDeliverAction, OrderDeliverActionTypes } from '../../types/order/orderDeliver';
 
 const createOrder =
     (order: {
@@ -87,7 +88,6 @@ const getOrderDetails =
 const payOrder =
     (id: string, paymentResult: OrderResponseBody) =>
     async (dispatch: Dispatch<OrderPayAction>, getState: () => RootState) => {
-        console.log('in payOrder function');
         dispatch({ type: OrderPayActionTypes.ORDER_PAY_BEGIN });
         try {
             const { userInfo } = getState().user;
@@ -103,7 +103,6 @@ const payOrder =
                 paymentResult,
                 config
             );
-            console.log('pay data', data);
 
             dispatch({
                 type: OrderPayActionTypes.ORDER_PAY_SUCCESS,
@@ -125,6 +124,41 @@ const payOrder =
 
 const payReset = () => async (dispatch: Dispatch<OrderPayAction>) =>
     dispatch({ type: OrderPayActionTypes.ORDER_PAY_RESET });
+
+const deliverOrder =
+    (id: string) => async (dispatch: Dispatch<OrderDeliverAction>, getState: () => RootState) => {
+        dispatch({ type: OrderDeliverActionTypes.ORDER_DELIVER_BEGIN });
+        try {
+            const { userInfo } = getState().user;
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${userInfo && userInfo.token}`,
+                },
+            };
+
+            const { data } = await axios.put<OrderDetails>(`/api/orders/${id}/deliver`, {}, config);
+
+            dispatch({
+                type: OrderDeliverActionTypes.ORDER_DELIVER_SUCCESS,
+                payload: { order: data },
+            });
+        } catch (err) {
+            if (err instanceof AxiosError)
+                dispatch({
+                    type: OrderDeliverActionTypes.ORDER_DELIVER_ERROR,
+                    payload: {
+                        msg:
+                            err.response && err.response.data.message
+                                ? err.response.data.message
+                                : err.message,
+                    },
+                });
+        }
+    };
+
+const deliverReset = () => async (dispatch: Dispatch<OrderDeliverAction>) =>
+    dispatch({ type: OrderDeliverActionTypes.ORDER_DELIVER_RESET });
 
 const getAllOrdersForClient =
     () => async (dispatch: Dispatch<OrderListClientAction>, getState: () => RootState) => {
@@ -188,4 +222,13 @@ const getAllOrders =
         }
     };
 
-export { createOrder, getOrderDetails, payOrder, payReset, getAllOrdersForClient, getAllOrders };
+export {
+    createOrder,
+    getOrderDetails,
+    payOrder,
+    payReset,
+    getAllOrdersForClient,
+    getAllOrders,
+    deliverOrder,
+    deliverReset,
+};

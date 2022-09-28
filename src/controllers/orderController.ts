@@ -51,6 +51,24 @@ const updateOrderToPaid = async (
   res.json(updatedOrder);
 };
 
+const updateOrderToDelivered = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
+  const { id } = req.params;
+  const order = await Order.findById(id);
+
+  if (!order) {
+    res.status(StatusCodes.NOT_FOUND);
+    throw new Error("Order not found");
+  }
+  order.isDelivered = true;
+  order.deliveredAt = new Date();
+
+  const updatedOrder = await order.save();
+  res.json(updatedOrder);
+};
+
 const addOrderItems = async (
   req: Request<
     {},
@@ -116,4 +134,5 @@ export {
   getOrderById,
   updateOrderToPaid,
   getAllOrders,
+  updateOrderToDelivered,
 };
