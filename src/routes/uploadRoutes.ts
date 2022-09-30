@@ -20,7 +20,7 @@ const checkFileType = (file: Express.Multer.File, cb: FileFilterCallback) => {
 
 const storage = diskStorage({
   destination(req, file, cb) {
-    const uploadPath = "./client/public/uploads/";
+    const uploadPath = "uploads/";
 
     if (!existsSync(uploadPath)) {
       mkdirSync(uploadPath, { recursive: true });
@@ -51,7 +51,7 @@ uploadRouter
     asyncHandler(admin),
     upload.single("image"),
     (req: Request, res: Response) => {
-      res.send(`/uploads/${req.file?.filename}`);
+      res.send(`${req.file?.path}`);
     }
   );
 

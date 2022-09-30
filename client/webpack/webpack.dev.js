@@ -17,6 +17,10 @@ module.exports = {
                 target: 'http://localhost:3000',
                 router: () => 'http://localhost:9000',
             },
+            '/uploads': {
+                target: 'http://localhost:3000',
+                router: () => 'http://localhost:9000',
+            },
         },
         historyApiFallback: true,
     },

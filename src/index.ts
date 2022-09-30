@@ -27,7 +27,7 @@ app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/upload", uploadRouter);
 
-app.use("/uploads", express.static(path.resolve(__dirname, "/uploads")));
+app.use("/uploads", express.static(path.resolve(__dirname, "..", "uploads")));
 
 app.use(notFound);
 app.use(errorHandler);
