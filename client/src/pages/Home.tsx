@@ -5,10 +5,11 @@ import { useActions } from '../hooks/useActions';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { Loader } from '../components/Loader';
 import { Message } from '../components/Message';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Paginate } from '../components/Paginate';
 import { ShowPerPage } from '../components/ShowPerPage';
 import { ProductCarousel } from '../components/ProductCarousel';
+import { Meta } from '../components/Meta';
 
 type HomeProps = {};
 
@@ -25,7 +26,14 @@ const Home: FC<HomeProps> = () => {
 
     return (
         <>
-            {!keyword && <ProductCarousel />}
+            <Meta />
+            {!keyword ? (
+                <ProductCarousel />
+            ) : (
+                <Link className="btn btn-light my-3" to="/">
+                    Go Back
+                </Link>
+            )}
             <div className="d-flex flex-row align-items-center justify-content-between">
                 <h1>Latest Products</h1>
                 <ShowPerPage

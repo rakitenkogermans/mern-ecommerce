@@ -7,6 +7,7 @@ import { useTypedSelector } from '../hooks/useTypedSelector';
 import { Loader } from '../components/Loader';
 import { Message } from '../components/Message';
 import { date } from '../utils/date';
+import { Meta } from '../components/Meta';
 
 type ProductProps = {};
 
@@ -70,6 +71,7 @@ const Product: FC<ProductProps> = () => {
             ) : (
                 product && (
                     <>
+                        <Meta title={product.name} />
                         <Row>
                             <Col md={6}>
                                 <Image src={product.image} alt={product.name} fluid />
