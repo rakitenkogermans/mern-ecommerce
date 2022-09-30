@@ -45,9 +45,13 @@ UserSchema.pre(
 
 UserSchema.methods.createJWT = function () {
   const user = this as IUserModel;
-  return sign({ userId: user._id }, process.env.JWT_SECRET || "", {
-    expiresIn: process.env.JWT_LIFETIME,
-  });
+  return sign(
+    { userId: user._id, userName: user.name },
+    process.env.JWT_SECRET || "",
+    {
+      expiresIn: process.env.JWT_LIFETIME,
+    }
+  );
 };
 
 UserSchema.methods.comparePassword = async function (

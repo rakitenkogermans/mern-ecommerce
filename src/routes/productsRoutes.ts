@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createProduct,
+  createProductReview,
   getAllProducts,
   getProduct,
   removeProduct,
@@ -19,6 +20,10 @@ productsRouter
     asyncHandler(admin),
     asyncHandler(createProduct)
   );
+
+productsRouter
+  .route("/:id/reviews")
+  .post(asyncHandler(protect), asyncHandler(createProductReview));
 
 productsRouter
   .route("/:id")
