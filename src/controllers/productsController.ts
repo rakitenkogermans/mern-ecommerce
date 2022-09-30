@@ -2,8 +2,13 @@ import { Request, Response } from "express";
 import { Product } from "../models/Product";
 import { StatusCodes } from "../constants/statusCodes";
 
-const getAllProducts = async (req: Request, res: Response) => {
-  const products = await Product.find({});
+const getAllProducts = async (
+  req: Request<{}, {}, {}, { keyword: string }>,
+  res: Response
+) => {
+  const keyword = req.query.keyword;
+  const query = keyword ? { name: { $regex: keyword, $options: "i" } } : {};
+  const products = await Product.find(query);
   res.json(products);
 };
 

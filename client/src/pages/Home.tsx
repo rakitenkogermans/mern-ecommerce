@@ -5,16 +5,19 @@ import { useActions } from '../hooks/useActions';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { Loader } from '../components/Loader';
 import { Message } from '../components/Message';
+import { useParams } from 'react-router-dom';
 
 type HomeProps = {};
 
 const Home: FC<HomeProps> = () => {
+    const { keyword } = useParams();
     const { listProducts } = useActions();
     const { products, isLoading, error } = useTypedSelector((state) => state.productList);
 
     useEffect(() => {
-        listProducts();
-    }, []);
+        listProducts(keyword || '');
+    }, [keyword]);
+
     return (
         <>
             <h1>Latest Products</h1>

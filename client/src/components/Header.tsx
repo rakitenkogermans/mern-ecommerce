@@ -4,6 +4,7 @@ import { FaShoppingCart, FaUserAlt } from 'react-icons/fa';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { useActions } from '../hooks/useActions';
+import { SearchBox } from './SearchBox';
 
 type HeaderProps = {};
 
@@ -20,6 +21,7 @@ const Header: FC<HeaderProps> = () => {
                     </NavLink>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
+                        <SearchBox />
                         <Nav className="gap-4 ms-auto" activeKey={location.pathname}>
                             <Nav.Link
                                 as={Link}

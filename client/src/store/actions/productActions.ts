@@ -7,10 +7,10 @@ import {
     ProductDetailsActionTypes,
 } from '../../types/products/productDetails';
 
-const listProducts = () => async (dispatch: Dispatch<ProductListAction>) => {
+const listProducts = (keyword: string) => async (dispatch: Dispatch<ProductListAction>) => {
     dispatch({ type: ProductListActionTypes.PRODUCT_LIST_BEGIN });
     try {
-        const { data } = await axios.get<ProductType[]>('/api/products');
+        const { data } = await axios.get<ProductType[]>('/api/products', { params: { keyword } });
         dispatch({
             type: ProductListActionTypes.PRODUCT_LIST_SUCCESS,
             payload: { products: data },

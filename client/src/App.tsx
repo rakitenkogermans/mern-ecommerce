@@ -28,6 +28,7 @@ const App: FC<AppProps> = () => {
             <Routes>
                 <Route path="/" element={<SharedLayout />}>
                     <Route index element={<Home />} />
+                    <Route path="search/:keyword" element={<Home />} />
                     <Route path="product/:id" element={<Product />} />
                     <Route path="cart/:id" element={<Cart />} />
                     <Route path="cart" element={<Cart />} />
