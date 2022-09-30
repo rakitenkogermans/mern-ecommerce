@@ -9,6 +9,7 @@ import * as UserDetailsUpdateActionCreators from './userDetailsUpdateActions';
 import * as ProductDeleteActionCreators from './productDeleteAction';
 import * as ProductCreateActionCreators from './productCreateActions';
 import * as ProductUpdateActionCreators from './productUpdateActions';
+import * as ProductCreateReviewActionCreators from './productReviewActions';
 
 export const ActionCreators = {
     ...ProductActionCreators,
@@ -22,4 +23,5 @@ export const ActionCreators = {
     ...ProductDeleteActionCreators,
     ...ProductCreateActionCreators,
     ...ProductUpdateActionCreators,
+    ...ProductCreateReviewActionCreators,
 };
