@@ -1,40 +1,30 @@
-import { Router } from "express";
-import { asyncHandler } from "../utils/asyncHandler";
+import { Router } from 'express';
+import { asyncHandler } from '../utils/asyncHandler';
 import {
-  addOrderItems,
-  getAllClientOrders,
-  getAllOrders,
-  getOrderById,
-  updateOrderToDelivered,
-  updateOrderToPaid,
-} from "../controllers/orderController";
-import { admin, protect } from "../middlewares/authMiddleware";
+    addOrderItems,
+    getAllClientOrders,
+    getAllOrders,
+    getOrderById,
+    updateOrderToDelivered,
+    updateOrderToPaid,
+} from '../controllers/orderController';
+import { admin, protect } from '../middlewares/authMiddleware';
 
 const orderRouter = Router();
 
 orderRouter
-  .route("/")
-  .post(asyncHandler(protect), asyncHandler(addOrderItems))
-  .get(asyncHandler(protect), asyncHandler(admin), asyncHandler(getAllOrders));
+    .route('/')
+    .post(asyncHandler(protect), asyncHandler(addOrderItems))
+    .get(asyncHandler(protect), asyncHandler(admin), asyncHandler(getAllOrders));
+
+orderRouter.route('/allorders').get(asyncHandler(protect), asyncHandler(getAllClientOrders));
+
+orderRouter.route('/:id').get(asyncHandler(protect), asyncHandler(getOrderById));
+
+orderRouter.route('/:id/pay').put(asyncHandler(protect), asyncHandler(updateOrderToPaid));
 
 orderRouter
-  .route("/allorders")
-  .get(asyncHandler(protect), asyncHandler(getAllClientOrders));
-
-orderRouter
-  .route("/:id")
-  .get(asyncHandler(protect), asyncHandler(getOrderById));
-
-orderRouter
-  .route("/:id/pay")
-  .put(asyncHandler(protect), asyncHandler(updateOrderToPaid));
-
-orderRouter
-  .route("/:id/deliver")
-  .put(
-    asyncHandler(protect),
-    asyncHandler(admin),
-    asyncHandler(updateOrderToDelivered)
-  );
+    .route('/:id/deliver')
+    .put(asyncHandler(protect), asyncHandler(admin), asyncHandler(updateOrderToDelivered));
 
 export { orderRouter };
