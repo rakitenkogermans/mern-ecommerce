@@ -3,13 +3,25 @@ import { Product } from "../models/Product";
 import { StatusCodes } from "../constants/statusCodes";
 
 const getAllProducts = async (
-  req: Request<{}, {}, {}, { keyword: string }>,
+  req: Request<
+    {},
+    {},
+    {},
+    { keyword: string; pageNumber: string; perPage: string }
+  >,
   res: Response
 ) => {
+  const pageSize = Number(req.query.perPage) || 4;
+  const page = Number(req.query.pageNumber) || 1;
+
   const keyword = req.query.keyword;
   const query = keyword ? { name: { $regex: keyword, $options: "i" } } : {};
-  const products = await Product.find(query);
-  res.json(products);
+
+  const count = await Product.countDocuments(query);
+  const products = await Product.find(query)
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+  res.json({ products, page, pages: Math.ceil(count / pageSize) });
 };
 
 const getProduct = async (req: Request<{ id: string }>, res: Response) => {

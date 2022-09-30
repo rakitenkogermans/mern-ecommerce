@@ -12,9 +12,9 @@ const SearchBox: FC<SearchBoxProps> = () => {
         e.preventDefault();
         if (keyword.trim()) {
             navigate(`/search/${keyword}`);
-        } else {
-            navigate('/');
+            return;
         }
+        navigate('/');
     };
 
     return (

@@ -21,3 +21,5 @@ export type ReviewType = {
     createdAt: Date;
     updatedAt: Date;
 };
+
+export type ProductPaginationType = { products: ProductType[]; page: number; pages: number };
