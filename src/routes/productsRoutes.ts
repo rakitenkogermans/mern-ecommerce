@@ -4,6 +4,7 @@ import {
   createProductReview,
   getAllProducts,
   getProduct,
+  getTopProducts,
   removeProduct,
   updateProduct,
 } from "../controllers/productsController";
@@ -20,6 +21,8 @@ productsRouter
     asyncHandler(admin),
     asyncHandler(createProduct)
   );
+
+productsRouter.route("/top").get(asyncHandler(getTopProducts));
 
 productsRouter
   .route("/:id/reviews")

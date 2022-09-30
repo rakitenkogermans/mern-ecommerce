@@ -6,6 +6,7 @@ import {
     ProductDetailsAction,
     ProductDetailsActionTypes,
 } from '../../types/products/productDetails';
+import { ProductTopAction, ProductTopActionTypes } from '../../types/products/productTop';
 
 const listProducts =
     (keyword: string, pageNumber: number, perPageNumber: number) =>
@@ -32,6 +33,28 @@ const listProducts =
                 });
         }
     };
+
+const listTopProducts = () => async (dispatch: Dispatch<ProductTopAction>) => {
+    dispatch({ type: ProductTopActionTypes.PRODUCT_TOP_BEGIN });
+    try {
+        const { data } = await axios.get<ProductType[]>('/api/products/top');
+        dispatch({
+            type: ProductTopActionTypes.PRODUCT_TOP_SUCCESS,
+            payload: { products: data },
+        });
+    } catch (err) {
+        if (err instanceof AxiosError)
+            dispatch({
+                type: ProductTopActionTypes.PRODUCT_TOP_ERROR,
+                payload: {
+                    msg:
+                        err.response && err.response.data.message
+                            ? err.response.data.message
+                            : err.message,
+                },
+            });
+    }
+};
 
 const listProductsReset = () => async (dispatch: Dispatch<ProductListAction>) => {
     dispatch({ type: ProductListActionTypes.PRODUCT_LIST_RESET });
@@ -77,4 +100,5 @@ export {
     changeProductPage,
     listProductsReset,
     changeProductPerPage,
+    listTopProducts,
 };

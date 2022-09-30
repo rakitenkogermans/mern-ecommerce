@@ -8,6 +8,7 @@ import { Message } from '../components/Message';
 import { useParams } from 'react-router-dom';
 import { Paginate } from '../components/Paginate';
 import { ShowPerPage } from '../components/ShowPerPage';
+import { ProductCarousel } from '../components/ProductCarousel';
 
 type HomeProps = {};
 
@@ -24,6 +25,7 @@ const Home: FC<HomeProps> = () => {
 
     return (
         <>
+            {!keyword && <ProductCarousel />}
             <div className="d-flex flex-row align-items-center justify-content-between">
                 <h1>Latest Products</h1>
                 <ShowPerPage

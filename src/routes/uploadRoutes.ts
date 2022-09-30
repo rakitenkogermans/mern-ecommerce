@@ -51,7 +51,7 @@ uploadRouter
     asyncHandler(admin),
     upload.single("image"),
     (req: Request, res: Response) => {
-      res.send(`${req.file?.path}`);
+      res.send(`/${req.file?.path}`);
     }
   );
 
