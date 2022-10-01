@@ -17,6 +17,8 @@
     "lint:fix": "eslint --fix \"./src/**/*.{js,ts,json}\"",
     "prettier": "prettier --write \"./src/**/*.{js,ts,json}\"",
     "format": "yarn run prettier && yarn run lint:fix",
+    "heroku-postbuild": "yarn install:client && yarn build:client",
+    "postinstall": "yarn build",
     "prepare": "husky install"
   },
   "author": "rakitenkogermans <rakitenko.germans@gmail.com>",
