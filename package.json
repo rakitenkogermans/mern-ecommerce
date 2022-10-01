@@ -18,8 +18,7 @@
     "prettier": "prettier --write \"./src/**/*.{js,ts,json}\"",
     "format": "yarn run prettier && yarn run lint:fix",
     "heroku-postbuild": "yarn install:client && yarn build:client",
-    "postinstall": "yarn build",
-    "prepare": "husky install"
+    "postinstall": "yarn build"
   },
   "author": "rakitenkogermans <rakitenko.germans@gmail.com>",
   "license": "MIT",
@@ -35,7 +34,6 @@
     "concurrently": "^7.3.0",
     "eslint": "^8.24.0",
     "eslint-config-prettier": "^8.5.0",
-    "husky": "^8.0.1",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
     "ts-node": "^10.9.1",
