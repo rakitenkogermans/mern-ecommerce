@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { User } from '../models/User';
 import { StatusCodes } from '../constants/statusCodes';
+import { BadRequestError, NotFoundError, UnAuthenticatedError } from '../errors';
 
 const authUser = async (
     req: Request<unknown, unknown, { email: string; password: string }>,
@@ -9,22 +10,19 @@ const authUser = async (
     const { email, password } = req.body;
 
     if (!email || !password) {
-        res.status(StatusCodes.BAD_REQUEST);
-        throw new Error('Please provide all values');
+        throw new BadRequestError('Please provide all values');
     }
 
     const user = await User.findOne({ email });
 
     if (!user) {
-        res.status(StatusCodes.UNAUTHORIZED);
-        throw new Error('Invalid credentials');
+        throw new UnAuthenticatedError('Invalid credentials');
     }
 
     const isPasswordCorrect = await user.comparePassword(password);
 
     if (!isPasswordCorrect) {
-        res.status(StatusCodes.UNAUTHORIZED);
-        throw new Error('Invalid credentials');
+        throw new UnAuthenticatedError('Invalid credentials');
     }
 
     const token = user.createJWT();
@@ -45,15 +43,13 @@ const registerUser = async (
     const { name, email, password } = req.body;
 
     if (!email || !password || !name) {
-        res.status(StatusCodes.BAD_REQUEST);
-        throw new Error('Please provide all values');
+        throw new BadRequestError('Please provide all values');
     }
 
     const userExists = await User.findOne({ email });
 
     if (userExists) {
-        res.status(StatusCodes.BAD_REQUEST);
-        throw new Error('Email already in use');
+        throw new BadRequestError('Email already in use');
     }
 
     const user = await User.create({ name, email, password });
@@ -72,8 +68,7 @@ const getUserProfile = async (req: Request, res: Response) => {
     const user = await User.findById(res.locals.userId).select('-password');
 
     if (!user) {
-        res.status(StatusCodes.NOT_FOUND);
-        throw new Error('User not found');
+        throw new NotFoundError('User not found');
     }
 
     res.json({
@@ -91,8 +86,7 @@ const updateUserProfile = async (
     const user = await User.findById(res.locals.userId).select('-password');
 
     if (!user) {
-        res.status(StatusCodes.NOT_FOUND);
-        throw new Error('User not found');
+        throw new NotFoundError('User not found');
     }
     const { name, email, password } = req.body;
     user.name = name || user.name;
@@ -120,8 +114,7 @@ const updateUserById = async (
     const user = await User.findById(req.params.id).select('-password');
 
     if (!user) {
-        res.status(StatusCodes.NOT_FOUND);
-        throw new Error('User not found');
+        throw new NotFoundError('User not found');
     }
     const { name, email, isAdmin } = req.body;
     user.name = name || user.name;
@@ -146,8 +139,7 @@ const getUsers = async (req: Request, res: Response) => {
 const getUserById = async (req: Request<{ id: string }>, res: Response) => {
     const user = await User.findById(req.params.id).select('-password');
     if (!user) {
-        res.status(StatusCodes.NOT_FOUND);
-        throw new Error('User not found');
+        throw new NotFoundError('User not found');
     }
     res.json(user);
 };
@@ -155,8 +147,7 @@ const getUserById = async (req: Request<{ id: string }>, res: Response) => {
 const removeUser = async (req: Request<{ id: string }>, res: Response) => {
     const user = await User.findById(req.params.id).select('-password');
     if (!user) {
-        res.status(StatusCodes.NOT_FOUND);
-        throw new Error('User not found');
+        throw new NotFoundError('User not found');
     }
     await user.remove();
     res.json({ message: 'User removed' });

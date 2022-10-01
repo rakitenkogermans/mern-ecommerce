@@ -45,4 +45,8 @@ const savePaymentMethod = (paymentMethod: string) => async (dispatch: Dispatch<C
     saveToLocalstorage(LocalstorageKeys.PAYMENT_METHOD, paymentMethod);
 };
 
-export { addToCart, removeFromCart, saveShippingAddress, savePaymentMethod };
+const cartReset = () => async (dispatch: Dispatch<CartAction>) => {
+    dispatch({ type: CartActionTypes.CART_RESET });
+};
+
+export { addToCart, removeFromCart, saveShippingAddress, savePaymentMethod, cartReset };

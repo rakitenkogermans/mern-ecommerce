@@ -45,6 +45,10 @@ const cartReducer = (state = cartInitialState, action: CartAction): CartState =>
         return { ...state, paymentMethod: action.payload.paymentMethod };
     }
 
+    if (action.type === CartActionTypes.CART_RESET) {
+        return { ...state, cartItems: [] };
+    }
+
     return state;
 };
 

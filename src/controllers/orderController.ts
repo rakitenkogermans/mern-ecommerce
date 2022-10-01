@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Order } from '../models/Order';
 import { StatusCodes } from '../constants/statusCodes';
+import { BadRequestError, NotFoundError } from '../errors';
 
 const getAllClientOrders = async (req: Request, res: Response) => {
     const orders = await Order.find({ user: res.locals.userId });
@@ -12,8 +13,7 @@ const getOrderById = async (req: Request<{ id: string }>, res: Response) => {
     const order = await Order.findById(id).populate('user', 'name email');
 
     if (!order) {
-        res.status(StatusCodes.NOT_FOUND);
-        throw new Error('Order not found');
+        throw new NotFoundError('Order not found');
     }
     res.json(order);
 };
@@ -35,8 +35,7 @@ const updateOrderToPaid = async (
     const order = await Order.findById(id);
 
     if (!order) {
-        res.status(StatusCodes.NOT_FOUND);
-        throw new Error('Order not found');
+        throw new NotFoundError('Order not found');
     }
     order.isPaid = true;
     order.paidAt = new Date();
@@ -56,8 +55,7 @@ const updateOrderToDelivered = async (req: Request<{ id: string }>, res: Respons
     const order = await Order.findById(id);
 
     if (!order) {
-        res.status(StatusCodes.NOT_FOUND);
-        throw new Error('Order not found');
+        throw new NotFoundError('Order not found');
     }
     order.isDelivered = true;
     order.deliveredAt = new Date();
@@ -100,8 +98,7 @@ const addOrderItems = async (
     } = req.body;
 
     if (orderItems && orderItems.length === 0) {
-        res.status(StatusCodes.BAD_REQUEST);
-        throw new Error('No order items!');
+        throw new BadRequestError('No order items!');
     }
 
     const order = new Order({

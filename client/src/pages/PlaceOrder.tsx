@@ -12,10 +12,11 @@ const PlaceOrder: FC<PlaceOrderProps> = () => {
     const { cartItems, shippingAddress, paymentMethod } = useTypedSelector((state) => state.cart);
     const { order, error, success } = useTypedSelector((state) => state.orderCreate);
     const navigate = useNavigate();
-    const { createOrder } = useActions();
+    const { createOrder, cartReset } = useActions();
 
     useEffect(() => {
         if (success && order) {
+            cartReset();
             navigate(`/order/${order._id}`);
         }
     }, [navigate, success]);

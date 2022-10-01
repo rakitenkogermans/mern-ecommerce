@@ -1,14 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
-import { StatusCodes } from '../constants/statusCodes';
 import { User } from '../models/User';
+import { UnAuthenticatedError } from '../errors';
 
 const protect = async (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer')) {
-        res.status(StatusCodes.UNAUTHORIZED);
-        throw new Error('Authentication Invalid');
+        throw new UnAuthenticatedError('Authentication Invalid');
     }
 
     const token = authHeader.split(' ')[1];
@@ -19,8 +18,7 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
         res.locals.userName = payload.userName;
         next();
     } catch (err) {
-        res.status(StatusCodes.UNAUTHORIZED);
-        throw new Error('Authentication Invalid');
+        throw new UnAuthenticatedError('Authentication Invalid');
     }
 };
 
@@ -32,8 +30,7 @@ const admin = async (req: Request, res: Response, next: NextFunction) => {
         return;
     }
 
-    res.status(StatusCodes.UNAUTHORIZED);
-    throw new Error('Authentication Invalid');
+    throw new UnAuthenticatedError('Authentication Invalid');
 };
 
 export { protect, admin };

@@ -4,8 +4,10 @@
   "main": "index.js",
   "scripts": {
     "client": "yarn --cwd client start",
+    "install:client": "yarn --cwd client add",
+    "build:client": "yarn --cwd client build",
     "server": "NODE_ENV=development concurrently \"npx tsc -w\" \"nodemon -q dist/index.js --ignore client\"",
-    "start": "node dist/server.js",
+    "start": "NODE_ENV=production node dist/index.js",
     "dev": "concurrently --kill-others-on-fail \" yarn server\" \" yarn client\"",
     "build": "rm -rf dist && npx tsc",
     "data:import": "NODE_ENV=development ts-node src/data/seeder.ts",

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Product } from '../models/Product';
 import { StatusCodes } from '../constants/statusCodes';
+import { BadRequestError, NotFoundError } from '../errors';
 
 const getAllProducts = async (
     req: Request<
@@ -27,8 +28,7 @@ const getAllProducts = async (
 const getProduct = async (req: Request<{ id: string }>, res: Response) => {
     const product = await Product.findById(req.params.id);
     if (!product) {
-        res.status(StatusCodes.NOT_FOUND);
-        throw new Error('Product not found');
+        throw new NotFoundError('Product not found');
     }
     res.json(product);
 };
@@ -36,8 +36,7 @@ const getProduct = async (req: Request<{ id: string }>, res: Response) => {
 const removeProduct = async (req: Request<{ id: string }>, res: Response) => {
     const product = await Product.findById(req.params.id);
     if (!product) {
-        res.status(StatusCodes.NOT_FOUND);
-        throw new Error('Product not found');
+        throw new NotFoundError('Product not found');
     }
     await product.remove();
     res.json({ message: 'Product removed' });
@@ -81,8 +80,7 @@ const updateProduct = async (
     const product = await Product.findById(req.params.id);
 
     if (!product) {
-        res.status(StatusCodes.NOT_FOUND);
-        throw new Error('Product not found');
+        throw new NotFoundError('Product not found');
     }
 
     product.name = name || product.name;
@@ -113,8 +111,7 @@ const createProductReview = async (
     const product = await Product.findById(req.params.id);
 
     if (!product) {
-        res.status(StatusCodes.NOT_FOUND);
-        throw new Error('Product not found');
+        throw new NotFoundError('Product not found');
     }
 
     const alreadyReviewed = product.reviews.find(
@@ -122,8 +119,7 @@ const createProductReview = async (
     );
 
     if (alreadyReviewed) {
-        res.status(StatusCodes.BAD_REQUEST);
-        throw new Error('Product already reviewed');
+        throw new BadRequestError('Product already reviewed');
     }
 
     const review = {
