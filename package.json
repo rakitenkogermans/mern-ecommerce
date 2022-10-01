@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "client": "yarn --cwd client start",
-    "install:client": "yarn --cwd client add",
+    "install:client": "cd client && yarn add",
     "build:client": "yarn --cwd client build",
     "server": "NODE_ENV=development concurrently \"npx tsc -w\" \"nodemon -q dist/index.js --ignore client\"",
     "start": "NODE_ENV=production node dist/index.js",
