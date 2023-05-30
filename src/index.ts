@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
 import { config } from 'dotenv';
 import morgan from 'morgan';
 import { connectDB } from './db/connect';
@@ -36,12 +36,12 @@ app.use('/api/upload', uploadRouter);
 
 app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.resolve(__dirname, '../client/build')));
-    app.get('*', (req: Request, res: Response) => {
-        res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-    });
-}
+// if (process.env.NODE_ENV === 'production') {
+//     app.use(express.static(path.resolve(__dirname, '../client/build')));
+//     app.get('*', (req: Request, res: Response) => {
+//         res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+//     });
+// }
 
 app.use(notFound);
 app.use(errorHandler);

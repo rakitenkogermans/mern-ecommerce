@@ -1,6 +1,6 @@
 # MERN E-Commerce
 
-[Hosted on Render 🔗](https://mern-ecommerce-rwkr.onrender.com/)
+Available at - https://proshop.germans.dev
 
 ## Available Users
 
